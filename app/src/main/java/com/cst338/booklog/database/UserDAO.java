@@ -7,7 +7,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import com.cst338.booklog.database.entities.User;
-import java.util.List;
+
+import java.util.ArrayList;
 
 @Dao
 public interface UserDAO {
@@ -18,7 +19,7 @@ public interface UserDAO {
     void delete(User user);
 
     @Query("SELECT * FROM " + BookLogDatabase.USER_TABLE+ " ORDER BY username")
-    LiveData<List<User>> getAllUsers();
+    ArrayList<User> getAllUsers();
 
     @Query("DELETE from " + BookLogDatabase.USER_TABLE)
     void deleteAll();

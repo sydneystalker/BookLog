@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 @TypeConverters(LocalDateTypeConverters.class)
 @Database(entities = {BookLog.class, User.class}, version = 1, exportSchema = false)
 public abstract class BookLogDatabase extends RoomDatabase {
-    public static final String USER_TABLE = "usertable";
+    public static final String USER_TABLE = "userTable";
     private static final String DATABASE_NAME = "BookLogdatabase";
     public static final String BOOK_LOG_TABLE = "bookLogTable";
     private static volatile BookLogDatabase INSTANCE;
