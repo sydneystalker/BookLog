@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
 import com.cst338.booklog.MainActivity;
 import com.cst338.booklog.database.entities.User;
@@ -19,9 +20,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverters.class)
-@Database(entities = {BookLog.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {BookLog.class, User.class, Book.class}, version = 1, exportSchema = false)
 public abstract class BookLogDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";
+    public static final String BOOK_TABLE = "bookTable";
     private static final String DATABASE_NAME = "BookLogdatabase";
     public static final String BOOK_LOG_TABLE = "bookLogTable";
     private static volatile BookLogDatabase INSTANCE;
@@ -64,5 +66,5 @@ public abstract class BookLogDatabase extends RoomDatabase {
 
     public abstract BookLogDAO bookLogDAO();
     public abstract UserDAO userDAO();
-
+    public abstract BookDAO bookDAO();
 }
