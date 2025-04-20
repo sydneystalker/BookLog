@@ -43,7 +43,7 @@ public class BookLogRepository {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            Log.d(MainActivity.TAG, "Problem getting BookLogRepository, thread error.");
+            Log.d("BOOKLOG", "Problem getting BookLogRepository, thread error.");
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class BookLogRepository {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            Log.i(MainActivity.TAG, "Problem when getting all BookLog in the repository.");
+            Log.i("BOOKLOG", "Problem when getting all BookLog in the repository.");
         }
         return null;
     }
@@ -81,7 +81,7 @@ public class BookLogRepository {
     }
 
     public LiveData<User> getUserByUsername(String username) {
-        return userDAO.getUserByUsername(username);
+        return userDAO.getUserByUserName(username);
     }
 
     public LiveData<User> getUserByUserId(int userId) {

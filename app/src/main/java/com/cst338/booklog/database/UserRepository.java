@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import com.cst338.booklog.database.entities.User;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -17,7 +19,7 @@ public class UserRepository {
     private UserRepository(Application application) {
         BookLogDatabase db = BookLogDatabase.getDatabase(application);
         this.userDAO = db.userDAO();
-        this.allUsers = this.userDAO.getAllUsers();
+        this.allUsers = (ArrayList<User>) this.userDAO.getAllUsers();
     }
 
     public static UserRepository getRepository (Application application){
@@ -35,7 +37,7 @@ public class UserRepository {
         try{
             return future.get();
         } catch (InterruptedException | ExecutionException e){
-            Log.d(MainActivity.TAG, "Problem getting GymLogRepository, thread error.");
+            Log.d("BOOKLOG", "Problem getting GymLogRepository, thread error.");
         }
         return null;
     }
@@ -52,7 +54,7 @@ public class UserRepository {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e){
-            Log.i(MainActivity.TAG, "Problem when getting all GymLogs in the repository");
+            Log.i("BOOKLOG", "Problem when getting all GymLogs in the repository");
         }
         return null;
     }

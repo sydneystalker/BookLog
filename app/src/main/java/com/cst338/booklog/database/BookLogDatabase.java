@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 public abstract class BookLogDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";
     public static final String BOOK_TABLE = "bookTable";
-    private static final String DATABASE_NAME = "BookLogdatabase";
+    private static final String DATABASE_NAME = "bookLogDatabase";
     public static final String BOOK_LOG_TABLE = "bookLogTable";
     private static volatile BookLogDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 1;
@@ -51,7 +51,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            Log.i(MainActivity.TAG, "DATABASE CREATED!");
+            Log.i("BOOKLOG", "DATABASE CREATED!");
             databaseWriteExecutor.execute(() -> {
                 UserDAO dao = INSTANCE.userDAO();
                 dao.deleteAll();
@@ -64,7 +64,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
     };
 
-    public abstract BookLogDAO bookLogDAO();
     public abstract UserDAO userDAO();
     public abstract BookDAO bookDAO();
+    public abstract BookLogDAO bookLogDAO();
 }

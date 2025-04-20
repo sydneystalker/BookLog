@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BookLog</string>
+    <string name="password">Password:</string>
+    <string name="username">Username:</string>
+    <string name="first_time_user">First time user?</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="this_is_the_app_logo">This is the app logo.</string>
 </resources>
