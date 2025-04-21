@@ -6,4 +6,6 @@
     <string name="login">Login</string>
     <string name="create_account">Create Account</string>
     <string name="this_is_the_app_logo">This is the app logo.</string>
+    <string name="preference_file_key">BookLogPreferenceFileName</string>
+    <string name="preference_userId_key">BookLogPreferenceUserIdKey</string>
 </resources>

@@ -12,7 +12,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
-import com.cst338.booklog.MainActivity;
 import com.cst338.booklog.database.entities.User;
 import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
 
