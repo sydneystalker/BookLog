@@ -22,6 +22,8 @@ public class CreateUserActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
+
+
     static Intent createUserActivityIntentFactory(Context context) {
        return new Intent(context, CreateUserActivity.class);
     }
