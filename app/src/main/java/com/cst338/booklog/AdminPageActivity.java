@@ -68,18 +68,12 @@ public class AdminPageActivity extends AppCompatActivity {
         }
 
         LiveData<User> userObserver = userRepository.getUserByUserId(loggedInUserID);
-        user = getUserFromLiveData();
         userObserver.observe(this, user -> {
             this.user = user;
             if(this.user != null){
                 invalidateOptionsMenu();
             }
         });
-    }
-
-    public User getUserFromLiveData() {
-        LiveData<User> userLiveData = userRepository.getUserByUserId(loggedInUserID);
-        return userLiveData.getValue();
     }
 
     @Override
