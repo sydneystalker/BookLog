@@ -64,7 +64,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
     };
 
-
+    public abstract GenreDAO genreDAO();
     public abstract UserDAO userDAO();
     public abstract BookDAO bookDAO();
 }
