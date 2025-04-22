@@ -14,14 +14,14 @@
         <EditText
             android:id="@+id/titleEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="@string/title"
             android:inputType="textCapWords" />
 
         <EditText
             android:id="@+id/authorEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="@string/author"
             android:layout_marginTop="16dp"
             android:inputType="textCapWords" />
@@ -29,7 +29,7 @@
         <EditText
             android:id="@+id/genreEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="@string/genre"
             android:layout_marginTop="16dp"
             android:inputType="textCapWords" />
@@ -40,12 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="24dp"
-            android:text="@string/add"
-            android:textSize="30sp"/>
+            android:text="@string/book"
+            android:textSize="30sp"
+            />
 
     </LinearLayout>
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
