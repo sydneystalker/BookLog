@@ -1,3 +1,6 @@
+/**
+ * Author: Sydney Stalker
+ */
 package com.cst338.booklog;
 
 import android.os.Bundle;
