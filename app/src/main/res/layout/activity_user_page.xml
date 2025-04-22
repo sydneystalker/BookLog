@@ -5,6 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".UserPageActivity">
+
+    <TextView
+        android:id="@+id/headerTV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/user_page"
+        android:textSize="50sp"
+        android:gravity="center" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

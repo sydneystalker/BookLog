@@ -13,4 +13,6 @@
     <string name="enter_password">Enter Password:</string>
     <string name="enter_username">Enter Username:</string>
     <string name="case_sensitive_notice">Note: username and password are case-sensitive.</string>
+    <string name="admin_page">ADMIN PAGE</string>
+    <string name="user_page">USER PAGE</string>
 </resources>
