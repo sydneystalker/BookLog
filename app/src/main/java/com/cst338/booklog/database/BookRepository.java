@@ -1,0 +1,26 @@
+package com.cst338.booklog.database;
+
+import android.app.Application;
+
+import androidx.lifecycle.LiveData;
+
+import com.cst338.booklog.database.entities.Book;
+
+import java.util.List;
+
+public class BookRepository {
+    private final BookDAO bookDAO;
+
+    public BookRepository(Application application) {
+        BookLogDatabase db = BookLogDatabase.getDatabase(application);
+        bookDAO = db.bookDAO();
+    }
+
+    public LiveData<List<Book>> getAllBooks() {
+        return bookDAO.getAllBooks();
+    }
+
+    public LiveData<List<Book>> getBooksByGenre(String genre) {
+        return bookDAO.getBooksByGenre(genre);
+    }
+}
