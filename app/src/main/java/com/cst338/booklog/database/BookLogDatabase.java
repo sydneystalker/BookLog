@@ -1,3 +1,6 @@
+/**
+ * Author: Sydney Stalker
+ */
 package com.cst338.booklog.database;
 
 import android.content.Context;
@@ -13,14 +16,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
 import com.cst338.booklog.MainActivity;
+import com.cst338.booklog.database.entities.Genre;
 import com.cst338.booklog.database.entities.User;
 import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
+import com.cst338.booklog.database.entities.Genre;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverters.class)
-@Database(entities = {BookLog.class, User.class, Book.class}, version = 1, exportSchema = false)
+@Database(entities = {BookLog.class, User.class, Book.class, Genre.class}, version = 1, exportSchema = false)
 public abstract class BookLogDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";
     public static final String BOOK_TABLE = "bookTable";
@@ -60,11 +65,19 @@ public abstract class BookLogDatabase extends RoomDatabase {
                 dao.insert(admin);
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
+
+                GenreDAO genreDao = INSTANCE.genreDAO();
+                genreDao.deleteAll();
+                genreDao.insert(new Genre("Fiction"));
+                genreDao.insert(new Genre("Non-Fiction"));
+                genreDao.insert(new Genre("Fantasy"));
+                genreDao.insert(new Genre("Romance"));
+                genreDao.insert(new Genre("Science Fiction"));
             });
         }
     };
 
-    public abstract BookLogDAO bookLogDAO();
+    public abstract GenreDAO genreDAO();
     public abstract UserDAO userDAO();
     public abstract BookLogDAO bookDAO();
 }
