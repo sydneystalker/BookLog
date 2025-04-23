@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">BookLog</string>
+    <string name="this_is_the_app_logo" />
+    <string name="username" />
+    <string name="password" />
+    <string name="login" />
+    <string name="first_time_user" />
+    <string name="create_account" />
+    <string name="enter_book_title">Enter Book Title</string>
+    <string name="add_book">Add Book</string>
+    <string name="reading_list">Reading List</string>
+    <string name="add_book_to_list">Add Book to List</string>
+    <string name="enter_book_id">Enter Book ID</string>
+    <string name="add_to_finished_books">Add to Finished Books</string>
+    <string name="reading_list_username">Reading List \'username\'</string>
 
 </resources>
