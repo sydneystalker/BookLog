@@ -72,4 +72,8 @@ public class UserRepository {
     public LiveData<User> getUserByUserId(int userId) {
         return userDAO.getUserByUserId(userId);
     }
+
+    public LiveData<Object> getUserByUsername(String username) {
+
+    }
 }
