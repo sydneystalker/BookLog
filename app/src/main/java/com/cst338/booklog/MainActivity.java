@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private int loggedInUserID =-1;
 
+    public static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
