@@ -1,19 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".UserPageActivity">
+    android:background="#FFF3D9"
+    tools:context=".UserActivity">
 
-    <TextView
-        android:id="@+id/headerTV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/user_page"
-        android:textSize="50sp"
-        android:gravity="center" />
+    <!-- Full-width Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:id="@+id/userTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Page"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/usernameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Content Area -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <!-- View Reading List Button -->
+        <TextView
+            android:id="@+id/viewReadingListButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="View Reading List"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!-- View Books Read Button -->
+        <TextView
+            android:id="@+id/viewBooksReadButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="View Books Read"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewReadingListButton"/>
+
+        <!-- Update Credentials Section -->
+        <TextView
+            android:id="@+id/updateCredentialsTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Update your Username and/or Password"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewBooksReadButton"/>
+
+        <EditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/white"
+            android:hint="New Username"
+            android:padding="8dp"
+            app:layout_constraintEnd_toStartOf="@id/passwordEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/updateCredentialsTitle"/>
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/white"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/usernameEditText"
+            app:layout_constraintTop_toBottomOf="@id/updateCredentialsTitle"/>
+
+        <TextView
+            android:id="@+id/updateCredentialsButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="Update Credentials"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/usernameEditText"/>
+
+        <!-- Delete Book Section -->
+        <TextView
+            android:id="@+id/deleteBookTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Delete a Book From Lists"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/updateCredentialsButton"/>
+
+        <EditText
+            android:id="@+id/bookToDeleteEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/white"
+            android:hint="Book Title"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deleteBookTitle"/>
+
+        <TextView
+            android:id="@+id/deleteBookButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="Delete Book"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bookToDeleteEditText"/>
+
+        <!-- Bottom Buttons -->
+        <TextView
+            android:id="@+id/deleteAllBooksLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Delete All Books \nFrom Logs"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deleteBookButton"/>
+
+        <TextView
+            android:id="@+id/deleteAllBooksButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="Delete Books"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/deleteAccountLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deleteAllBooksLabel"/>
+
+        <TextView
+            android:id="@+id/deleteAccountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Delete User Information \nand Logs"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deleteBookButton"/>
+
+        <TextView
+            android:id="@+id/deleteAccountButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/red"
+            android:gravity="center"
+            android:text="Delete Account"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/deleteAllBooksButton"
+            app:layout_constraintTop_toBottomOf="@id/deleteAccountLabel"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

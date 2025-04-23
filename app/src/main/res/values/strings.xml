@@ -15,6 +15,7 @@
     <string name="case_sensitive_notice">Note: username and password are case-sensitive.</string>
     <string name="admin_page">ADMIN PAGE</string>
     <string name="user_page">USER PAGE</string>
+    <string name="update_your_username_and_or_password">Update your Username and/or Password</string>
 
 
 </resources>
