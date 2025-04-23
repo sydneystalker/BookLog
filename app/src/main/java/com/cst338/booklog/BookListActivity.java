@@ -3,65 +3,64 @@
  */
 package com.cst338.booklog;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.cst338.booklog.database.BookAdapter;
-import com.cst338.booklog.database.BookViewModel;
+import com.cst338.booklog.database.BookRepository;
 
-import java.util.ArrayList;
 
 public class BookListActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    private ActivityBookListBinding binding;
+    private BookRepository bookRepo;
     private BookAdapter adapter;
-    private BookViewModel bookViewModel;
-    private Spinner genreSpinner;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_list_activity);
+        binding = ActivityBookListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        recyclerView = findViewById(R.id.bookRecyclerView);
-        genreSpinner = findViewById(R.id.genreSpinner);
+        bookRepo = BookRepository.getRepository(getApplication());
+        username = getIntent().getStringExtra("USERNAME");
 
-        adapter = new BookAdapter(new ArrayList<>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
-        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-
-        setupSpinner();
+        setupRecyclerView();
+        setupAddButton();
     }
 
-    private void setupSpinner() {
-        String[] genres = {"All", "Non-Fiction", "Fantasy", "Romance", "Mystery", "Science Fiction", "Horror"};
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genres);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genreSpinner.setAdapter(spinnerAdapter);
+    private void setupRecyclerView() {
+        adapter = new BookAdapter(this::onMarkAsFinished);
+        binding.bookListRecycler.setAdapter(adapter);
+        binding.bookListRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selectedGenre = parent.getItemAtPosition(pos).toString();
-                if (selectedGenre.equals("All")) {
-                    bookViewModel.getAllBooks().observe(BookListActivity.this, adapter::setBooks);
-                } else {
-                    bookViewModel.getBooksByGenre(selectedGenre).observe(BookListActivity.this, adapter::setBooks);
-                }
+        bookRepo.getUnreadBooksByUser(username).observe(this, adapter::submitList);
+    }
+
+    private void setupAddButton() {
+        binding.addBookButton.setOnClickListener(v -> {
+            String title = binding.bookTitleInput.getText().toString().trim();
+            if (!title.isEmpty()) {
+                Book newBook = new Book(username, title, false, null);
+                bookRepo.insertBook(newBook);
+                binding.bookTitleInput.setText(""); // clear field
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
-}
 
+    private void onMarkAsFinished(Book book) {
+        book.isFinished = true;
+        book.dateFinished = LocalDate.now();
+        bookRepo.updateBook(book);
+    }
+
+    public static Intent intentFactory(Context context, String username) {
+        Intent intent = new Intent(context, BookListActivity.class);
+        intent.putExtra("USERNAME", username);
+        return intent;
+    }
+}
