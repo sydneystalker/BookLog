@@ -5,11 +5,7 @@ import androidx.room.PrimaryKey;
 
 import com.cst338.booklog.database.BookLogDatabase;
 
-import java.util.Objects;
 
-@Entity(tableName = BookLogDatabase.BOOK_TABLE)
-public class Book {
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private String author;
@@ -21,8 +17,6 @@ public class Book {
         this.genre = genre;
     }
 
-    // Getters and Setters
-    public long getId() {
         return id;
     }
 

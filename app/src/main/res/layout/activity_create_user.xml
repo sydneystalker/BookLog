@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".CreateUserActivity">
+
+    <TextView
+        android:id="@+id/pageHeaderTV"
+        android:layout_width="360dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/create_account"
+        android:textSize="44sp"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        tools:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/pageNoticeTV" />
+
+    <TextView
+        android:id="@+id/pageNoticeTV"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/case_sensitive_notice"
+        android:textSize="16sp"
+        tools:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/enterUsernameTV" />
+
+    <TextView
+        android:id="@+id/enterUsernameTV"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:labelFor="@+id/enterUsernameET"
+        android:text="@string/enter_username"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/enterUsernameET"
+        app:layout_constraintTop_toTopOf="@id/enterUsernameET"
+        tools:textAlignment="textEnd" />
+
+    <EditText
+        android:id="@+id/enterUsernameET"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginBottom="176dp"
+        android:textSize="20sp"
+        android:autofillHints="username"
+        android:gravity="center"
+        tools:textAlignment="center"
+        android:background="@color/white"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/enterPasswordTV"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:labelFor="@+id/enterPasswordET"
+        android:text="@string/enter_password"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/enterPasswordET"
+        app:layout_constraintTop_toBottomOf="@id/enterUsernameTV"
+        tools:textAlignment="textEnd" />
+
+    <EditText
+        android:id="@+id/enterPasswordET"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="password"
+        android:textSize="20sp"
+        android:gravity="center"
+        tools:textAlignment="center"
+        android:background="@color/white"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enterUsernameET" />
+
+    <TextView
+        android:id="@+id/confirmPasswordTV"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:labelFor="@+id/confirmPasswordET"
+        android:text="@string/confirm_password"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/confirmPasswordET"
+        app:layout_constraintTop_toBottomOf="@+id/enterPasswordTV"
+        tools:textAlignment="textEnd" />
+
+    <EditText
+        android:id="@+id/confirmPasswordET"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        tools:textAlignment="center"
+        android:autofillHints="password"
+        android:textSize="20sp"
+        android:background="@color/white"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterPasswordET" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/register"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTV" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

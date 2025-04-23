@@ -1,9 +1,4 @@
 <resources>
     <string name="app_name">BookLog</string>
-    <string name="title">Title</string>
-    <string name="author">Author</string>
-    <string name="genre">Genre</string>
-    <string name="add">+ Add</string>
-    <string name="wishlist">+ Wishlist</string>
-    <string name="book">+ Book</string>
+
 </resources>
