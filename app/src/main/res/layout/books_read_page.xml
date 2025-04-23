@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:background="#990000"
         android:textColor="#FFFFFF"
-        android:text="@string/books_read"
+        android:text="@string/books_read_username"
         android:textSize="18sp"
         android:padding="12dp"
         android:gravity="end"
+        android:textAlignment="viewEnd"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
