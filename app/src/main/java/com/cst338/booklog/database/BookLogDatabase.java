@@ -67,5 +67,5 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
     };
 
-
+ public abstract BookDAO bookDAO();
 }
