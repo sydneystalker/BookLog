@@ -13,16 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cst338.booklog.database.entities.Book;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
+    private final Consumer<Book> onBookClick;
 
-    public BookAdapter(List<Book> books) {
-        this.books = books;
+    public BookAdapter(Consumer<Book> onBookClick) {
+        this.onBookClick = onBookClick;
     }
 
-    public void setBooks(List<Book> newBooks) {
+    public void submitList(List<Book> newBooks) {
         this.books = newBooks;
         notifyDataSetChanged();
     }
@@ -40,6 +43,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         Book book = books.get(position);
         ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(book.getTitle());
         ((TextView) holder.itemView.findViewById(android.R.id.text2)).setText(book.getGenre());
+
+        holder.itemView.setOnClickListener(v -> onBookClick.accept(book));
     }
 
     @Override
@@ -53,4 +58,3 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         }
     }
 }
-
