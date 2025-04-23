@@ -3,9 +3,12 @@ package com.cst338.booklog.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.cst338.booklog.database.BookLogDatabase;
+import java.util.Objects;
 
+@Entity(tableName = "bookTable")
+public class Book {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private String author;
@@ -17,6 +20,7 @@ import com.cst338.booklog.database.BookLogDatabase;
         this.genre = genre;
     }
 
+    public int getId() {
         return id;
     }
 
@@ -48,13 +52,15 @@ import com.cst338.booklog.database.BookLogDatabase;
         this.genre = genre;
     }
 
-
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return id == book.id && Objects.equals(title, book.title) && Objects.equals(author, book.author)
-                && Objects.equals(genre, book.genre);
+        return id == book.id &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(author, book.author) &&
+                Objects.equals(genre, book.genre);
     }
 
     @Override

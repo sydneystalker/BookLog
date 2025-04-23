@@ -3,7 +3,7 @@ package com.cst338.booklog.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "genre")
+@Entity(tableName = "genreTable")
 public class Genre {
 
     @PrimaryKey(autoGenerate = true)

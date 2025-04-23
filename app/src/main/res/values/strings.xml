@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">BookLog</string>
+    <string name="password">Password:</string>
+    <string name="username">Username:</string>
+    <string name="first_time_user">First time user?</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="this_is_the_app_logo">This is the app logo.</string>
+    <string name="preference_file_key">BookLogPreferenceFileName</string>
+    <string name="preference_userId_key">BookLogPreferenceUserIdKey</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="enter_password">Enter Password:</string>
+    <string name="enter_username">Enter Username:</string>
+    <string name="case_sensitive_notice">Note: username and password are case-sensitive.</string>
+    <string name="admin_page">ADMIN PAGE</string>
+    <string name="user_page">USER PAGE</string>
+
 
 </resources>

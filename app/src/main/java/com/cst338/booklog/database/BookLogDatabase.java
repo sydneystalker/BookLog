@@ -1,6 +1,3 @@
-/**
- * Author: Sydney Stalker
- */
 package com.cst338.booklog.database;
 
 import android.content.Context;
@@ -15,10 +12,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
-
 import com.cst338.booklog.database.entities.User;
-import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
 import com.cst338.booklog.database.entities.Genre;
+import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,6 +26,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
     public static final String BOOK_TABLE = "bookTable";
     private static final String DATABASE_NAME = "bookLogDatabase";
     public static final String BOOK_LOG_TABLE = "bookLogTable";
+    public static final String GENRE_TABLE = "genreTable";
     private static volatile BookLogDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 1;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -51,6 +48,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -76,5 +74,8 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
     };
 
-
+    public abstract GenreDAO genreDAO();
+    public abstract UserDAO userDAO();
+    public abstract BookDAO bookDAO();
+    public abstract BookLogDAO bookLogDAO();
 }
