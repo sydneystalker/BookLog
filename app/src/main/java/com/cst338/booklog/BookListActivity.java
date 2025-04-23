@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cst338.booklog.database.BookAdapter;
 import com.cst338.booklog.database.BookRepository;
 import com.cst338.booklog.database.UserRepository;
+import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
 
 import java.time.LocalDateTime;
