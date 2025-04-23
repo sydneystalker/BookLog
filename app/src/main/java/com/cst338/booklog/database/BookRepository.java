@@ -43,8 +43,4 @@ public class BookRepository {
     public LiveData<List<Book>> getAllBooks() {
         return bookDAO.getAllBooks();
     }
-
-    public LiveData<List<Book>> getFinishedBooksByUser(int userId) {
-        return bookLogDAO.getFinishedBooksByUser(userId);
-    }
 }
