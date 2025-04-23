@@ -16,6 +16,19 @@
     <string name="admin_page">ADMIN PAGE</string>
     <string name="user_page">USER PAGE</string>
     <string name="update_your_username_and_or_password">Update your Username and/or Password</string>
+    <string name="user_page_toolbar">User Page</string>
+    <string name="username_user_page">Username</string>
+    <string name="view_reading_list">View Reading List</string>
+    <string name="view_books_read">View Books Read</string>
+    <string name="update_your_username_and_or_password_user_page">Update your Username and/or Password</string>
+    <string name="update_username">Update Username</string>
+    <string name="update_password">Update Password</string>
+    <string name="delete_a_book_from_lists">Delete a Book From Lists</string>
+    <string name="delete_book">Delete Book</string>
+    <string name="delete_all_books_nfrom_logs">Delete All Books \nFrom Logs</string>
+    <string name="delete_books">Delete Books</string>
+    <string name="delete_user_information_nand_logs">Delete User Information \nand Logs</string>
+    <string name="delete_account">Delete Account</string>
 
 
 </resources>
