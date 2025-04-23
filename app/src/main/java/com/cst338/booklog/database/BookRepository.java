@@ -7,8 +7,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.cst338.booklog.database.entities.Book;
-
 import java.util.List;
 
 public class BookRepository {
