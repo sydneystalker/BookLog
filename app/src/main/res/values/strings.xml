@@ -29,6 +29,11 @@
     <string name="delete_books">Delete Books</string>
     <string name="delete_user_information_nand_logs">Delete User Information \nand Logs</string>
     <string name="delete_account">Delete Account</string>
+    <string name="change_username">Change Username</string>
+    <string name="change_password">Change Password</string>
+    <string name="delete_user_data">Delete User Data</string>
+    <string name="reset_database">Reset Database</string>
+    <string name="delete_user_and_all_associated_data">Delete user and all associated data</string>
 
 
 </resources>

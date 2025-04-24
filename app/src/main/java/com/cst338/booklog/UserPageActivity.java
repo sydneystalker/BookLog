@@ -133,12 +133,12 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     private void viewReadingList() {
-        // Implement view reading list functionality
+        // Implement the view reading list functionality !!
         toastMaker("View Reading List clicked");
     }
 
     private void viewBooksRead() {
-        // Implement view books read functionality
+        // Implement the view books read functionality !!
         toastMaker("View Books Read clicked");
     }
 
@@ -151,4 +151,5 @@ public class UserPageActivity extends AppCompatActivity {
         intent.putExtra(USER_PAGE_ACTIVITY_USER_ID, userId);
         return intent;
     }
+
 }

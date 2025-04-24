@@ -8,7 +8,6 @@
     android:background="#FFF3D9"
     tools:context=".AdminPageActivity">
 
-  <!-- Full-width Toolbar -->
   <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="0dp"
@@ -29,7 +28,7 @@
           android:id="@+id/adminTitle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Admin Page"
+          android:text="@string/admin_page"
           android:textColor="@android:color/white"
           android:textSize="20sp"
           android:textStyle="bold"
@@ -41,7 +40,7 @@
           android:id="@+id/usernameTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Username"
+          android:text="@string/username"
           android:textColor="@android:color/white"
           android:textSize="16sp"
           app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +49,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.appcompat.widget.Toolbar>
 
-  <!-- Content Area -->
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="0dp"
       android:layout_height="0dp"
@@ -60,7 +58,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    <!-- Update Section -->
     <TextView
         android:id="@+id/updateTitle"
         android:gravity="center"
@@ -74,7 +71,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Username Field and Button -->
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="0dp"
@@ -92,7 +88,7 @@
         android:layout_height="48dp"
         android:background="@color/red"
         android:gravity="center"
-        android:text="Change Username"
+        android:text="@string/change_username"
         android:textAllCaps="true"
         android:layout_marginEnd="20dp"
         android:textColor="@color/white"
@@ -100,7 +96,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/usernameEditText" />
 
-    <!-- Password Field and Button -->
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_marginStart="20dp"
@@ -120,14 +115,13 @@
         android:background="@color/red"
         android:layout_marginStart="20dp"
         android:gravity="center"
-        android:text="Change Password"
+        android:text="@string/change_password"
         android:textAllCaps="true"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/changeUsernameButton"
         app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
-    <!-- Delete Section -->
 
     <TextView
         android:id="@+id/deleteTitle"
@@ -136,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
         android:paddingBottom="8dp"
-        android:text="Delete user and all associated data"
+        android:text="@string/delete_user_and_all_associated_data"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -160,14 +154,12 @@
         android:background="@color/red"
         android:gravity="center"
         android:padding="12dp"
-        android:text="Delete User Data"
+        android:text="@string/delete_user_data"
         android:textAllCaps="true"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/deleteUserEditText" />
-
-    <!-- Reset Section -->
 
     <TextView
         android:id="@+id/resetTitle"
@@ -190,7 +182,7 @@
         android:background="@color/red"
         android:gravity="center"
         android:padding="12dp"
-        android:text="Reset Database"
+        android:text="@string/reset_database"
         android:textAllCaps="true"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

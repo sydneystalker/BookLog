@@ -97,40 +97,30 @@ public class BookLogRepository {
 
     public void deleteBookAndLogs(int bookId, int userId) {
         databaseWriteExecutor.execute(() -> {
-            // First delete the book logs for this user and book
             bookLogDAO.deleteBookLogsForBook(bookId);
-            // Then delete the book itself
             bookLogDAO.deleteBook(bookId);
         });
     }
 
     public void deleteAllBooksAndLogsForUser(int userId) {
         databaseWriteExecutor.execute(() -> {
-            // First delete all book logs for this user
             bookLogDAO.deleteAllLogsForUser(userId);
-            // Then delete all books associated with this user
             bookLogDAO.deleteAllBooksForUser(userId);
         });
     }
 
     public void deleteUserAndData(User user) {
         databaseWriteExecutor.execute(() -> {
-            // First delete all book logs for this user
             bookLogDAO.deleteAllLogsForUser(user.getId());
-            // Then delete all books associated with this user
             bookLogDAO.deleteAllBooksForUser(user.getId());
-            // Finally delete the user
             userDAO.delete(user);
         });
     }
 
     public void resetDatabase() {
         databaseWriteExecutor.execute(() -> {
-            // Delete all book logs
             bookLogDAO.deleteAllBookLogs();
-            // Delete all books
             bookLogDAO.deleteAllBooks();
-            // Delete all non-admin users
             userDAO.deleteAllNonAdminUsers();
         });
     }
