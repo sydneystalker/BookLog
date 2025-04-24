@@ -1,5 +1,7 @@
 package com.cst338.booklog.database;
 
+import static com.cst338.booklog.database.BookLogDatabase.databaseWriteExecutor;
+
 import android.app.Application;
 import android.util.Log;
 
@@ -16,13 +18,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class BookLogRepository {
-
+    private final BookDAO bookDAO;
     private final BookLogDAO bookLogDAO;
     private final UserDAO userDAO;
     private static BookLogRepository repository;
 
     private BookLogRepository(Application application) {
         BookLogDatabase db = BookLogDatabase.getDatabase(application);
+        this.bookDAO = db.bookDAO();
         this.bookLogDAO = db.bookLogDAO();
         this.userDAO = db.userDAO();
         ArrayList<BookLog> allLogs = (ArrayList<BookLog>) this.bookLogDAO.getAllRecords();
@@ -32,7 +35,7 @@ public class BookLogRepository {
         if (repository != null) {
             return repository;
         }
-        Future<BookLogRepository> future = BookLogDatabase.databaseWriteExecutor.submit(
+        Future<BookLogRepository> future = databaseWriteExecutor.submit(
                 new Callable<BookLogRepository>() {
                     @Override
                     public BookLogRepository call() throws Exception {
@@ -49,7 +52,7 @@ public class BookLogRepository {
     }
 
     public ArrayList<BookLog> getAllLogs() {
-        Future<ArrayList<BookLog>> future = BookLogDatabase.databaseWriteExecutor.submit(
+        Future<ArrayList<BookLog>> future = databaseWriteExecutor.submit(
                 new Callable<ArrayList<BookLog>>() {
                     @Override
                     public ArrayList<BookLog> call() throws Exception {
@@ -67,14 +70,14 @@ public class BookLogRepository {
     }
 
     public void insertBookLog(BookLog bookLog) {
-        BookLogDatabase.databaseWriteExecutor.execute(() ->
+        databaseWriteExecutor.execute(() ->
         {
             bookLogDAO.insert(bookLog);
         });
     }
 
     public void insertUser(User... user) {
-        BookLogDatabase.databaseWriteExecutor.execute(() ->
+        databaseWriteExecutor.execute(() ->
         {
             userDAO.insert(user);
         });
@@ -90,6 +93,46 @@ public class BookLogRepository {
 
     public LiveData<List<BookLog>> getAllLogsByUserIdLiveData(int loggedInUserId) {
         return bookLogDAO.getRecordsetUserIdLiveData(loggedInUserId);
+    }
+
+    public void deleteBookAndLogs(int bookId, int userId) {
+        databaseWriteExecutor.execute(() -> {
+            // First delete the book logs for this user and book
+            bookLogDAO.deleteBookLogsForBook(bookId);
+            // Then delete the book itself
+            bookLogDAO.deleteBook(bookId);
+        });
+    }
+
+    public void deleteAllBooksAndLogsForUser(int userId) {
+        databaseWriteExecutor.execute(() -> {
+            // First delete all book logs for this user
+            bookLogDAO.deleteAllLogsForUser(userId);
+            // Then delete all books associated with this user
+            bookLogDAO.deleteAllBooksForUser(userId);
+        });
+    }
+
+    public void deleteUserAndData(User user) {
+        databaseWriteExecutor.execute(() -> {
+            // First delete all book logs for this user
+            bookLogDAO.deleteAllLogsForUser(user.getId());
+            // Then delete all books associated with this user
+            bookLogDAO.deleteAllBooksForUser(user.getId());
+            // Finally delete the user
+            userDAO.delete(user);
+        });
+    }
+
+    public void resetDatabase() {
+        databaseWriteExecutor.execute(() -> {
+            // Delete all book logs
+            bookLogDAO.deleteAllBookLogs();
+            // Delete all books
+            bookLogDAO.deleteAllBooks();
+            // Delete all non-admin users
+            userDAO.deleteAllNonAdminUsers();
+        });
     }
 
 }

@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
+
 import com.cst338.booklog.database.entities.User;
 
 import java.util.ArrayList;
@@ -30,4 +32,12 @@ public interface UserDAO {
 
     @Query("SELECT * from " + BookLogDatabase.USER_TABLE + " WHERE id == :userId")
     LiveData<User> getUserByUserId(int userId);
+
+    @Update
+    void update(User user);
+
+    @Query("DELETE FROM " + BookLogDatabase.USER_TABLE + " WHERE isAdmin = 0")
+    void deleteAllNonAdminUsers();
+
+
 }

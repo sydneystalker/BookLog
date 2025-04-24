@@ -72,4 +72,10 @@ public class UserRepository {
     public LiveData<User> getUserByUserId(int userId) {
         return userDAO.getUserByUserId(userId);
     }
+
+    public void updateUser(User user) {
+        BookLogDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.update(user);
+        });
+    }
 }

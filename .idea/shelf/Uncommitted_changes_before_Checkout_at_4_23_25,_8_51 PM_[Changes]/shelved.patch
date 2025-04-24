@@ -1,0 +1,324 @@
+Index: app/src/main/java/com/cst338/booklog/database/BookRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/**\n * Author: Sydney Stalker\n */\npackage com.cst338.booklog.database;\n\nimport android.app.Application;\n\nimport androidx.lifecycle.LiveData;\n\nimport com.cst338.booklog.database.entities.Book;\nimport com.cst338.booklog.database.entities.BookLog;\n\nimport java.util.List;\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\n\n\npublic class BookRepository {\n    private final BookDAO bookDAO;\n    private final BookLogDAO bookLogDAO;\n    private final ExecutorService executor;\n\n    private static volatile BookRepository INSTANCE;\n\n    public static BookRepository getRepository(Application application) {\n        if (INSTANCE == null) {\n            synchronized (BookRepository.class) {\n                if (INSTANCE == null) {\n                    BookLogDatabase db = BookLogDatabase.getDatabase(application);\n                    INSTANCE = new BookRepository(db.bookDAO(), db.bookLogDAO());\n                }\n            }\n        }\n        return INSTANCE;\n    }\n\n    private BookRepository(BookDAO bookDAO, BookLogDAO bookLogDAO) {\n        this.bookDAO = bookDAO;\n        this.bookLogDAO = bookLogDAO;\n        this.executor = Executors.newSingleThreadExecutor();\n    }\n\n    public LiveData<List<Book>> getAllBooks() {\n        return bookDAO.getAllBooks();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookRepository.java b/app/src/main/java/com/cst338/booklog/database/BookRepository.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookRepository.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookRepository.java	(date 1745466546540)
+@@ -43,4 +43,4 @@
+     public LiveData<List<Book>> getAllBooks() {
+         return bookDAO.getAllBooks();
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/BookViewModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/**\n * Author: Sydney Stalker\n */\npackage com.cst338.booklog.database;\n\nimport android.app.Application;\n\nimport androidx.annotation.NonNull;\nimport androidx.lifecycle.AndroidViewModel;\nimport androidx.lifecycle.LiveData;\n\nimport com.cst338.booklog.database.entities.Book;\n\nimport java.util.List;\n\npublic class BookViewModel extends AndroidViewModel {\n    private BookRepository repository;\n\n    public BookViewModel(@NonNull Application application) {\n        super(application);\n        repository = new BookRepository(application);\n    }\n\n    public LiveData<List<Book>> getAllBooks() {\n        return repository.getAllBooks();\n    }\n\n    public LiveData<List<Book>> getBooksByGenre(String genre) {\n        return repository.getBooksByGenre(genre);\n    }\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookViewModel.java b/app/src/main/java/com/cst338/booklog/database/BookViewModel.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookViewModel.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookViewModel.java	(date 1745466527344)
+@@ -28,5 +28,4 @@
+     public LiveData<List<Book>> getBooksByGenre(String genre) {
+         return repository.getBooksByGenre(genre);
+     }
+-}
+-
++}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/entities/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database.entities;\n\nimport androidx.room.Entity;\nimport androidx.room.PrimaryKey;\nimport com.cst338.booklog.database.BookLogDatabase;\nimport java.util.Objects;\n\n@Entity(tableName = BookLogDatabase.USER_TABLE)\npublic class User {\n    @PrimaryKey(autoGenerate = true)\n    private int id;\n    private String userName;\n    private String password;\n    private boolean isAdmin;\n\n    public User(String userName, String password){\n        this.password = password;\n        this.userName = userName;\n        isAdmin = false;\n    }\n\n    @Override\n    public boolean equals(Object o) {\n        if (o == null || getClass() != o.getClass()) return false;\n        User user = (User) o;\n        return id == user.id && isAdmin == user.isAdmin && Objects.equals(userName, user.userName) && Objects.equals(password, user.password);\n    }\n\n    @Override\n    public int hashCode() {\n        return Objects.hash(id, userName, password, isAdmin);\n    }\n\n    public int getId() {\n        return id;\n    }\n\n    public void setId(int id) {\n        this.id = id;\n    }\n\n    public String getUserName() {\n        return userName;\n    }\n\n    public void setUserName(String userName) {\n        this.userName = userName;\n    }\n\n    public String getPassword() {\n        return password;\n    }\n\n    public void setPassword(String password) {\n        this.password = password;\n    }\n\n    public boolean isAdmin() {\n        return isAdmin;\n    }\n\n    public void setAdmin(boolean admin) {\n        isAdmin = admin;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/entities/User.java b/app/src/main/java/com/cst338/booklog/database/entities/User.java
+--- a/app/src/main/java/com/cst338/booklog/database/entities/User.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/entities/User.java	(date 1745466342736)
+@@ -62,4 +62,4 @@
+     public void setAdmin(boolean admin) {
+         isAdmin = admin;
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n    <string name=\"app_name\">BookLog</string>\n    <string name=\"password\">Password:</string>\n    <string name=\"username\">Username:</string>\n    <string name=\"first_time_user\">First time user?</string>\n    <string name=\"login\">Login</string>\n    <string name=\"create_account\">Create Account</string>\n    <string name=\"this_is_the_app_logo\">This is the app logo.</string>\n    <string name=\"preference_file_key\">BookLogPreferenceFileName</string>\n    <string name=\"preference_userId_key\">BookLogPreferenceUserIdKey</string>\n    <string name=\"register\">Register</string>\n    <string name=\"confirm_password\">Confirm Password:</string>\n    <string name=\"enter_password\">Enter Password:</string>\n    <string name=\"enter_username\">Enter Username:</string>\n    <string name=\"case_sensitive_notice\">Note: username and password are case-sensitive.</string>\n    <string name=\"admin_page\">ADMIN PAGE</string>\n    <string name=\"user_page\">USER PAGE</string>\n    <string name=\"update_your_username_and_or_password\">Update your Username and/or Password</string>\n    <string name=\"user_page_toolbar\">User Page</string>\n    <string name=\"username_user_page\">Username</string>\n    <string name=\"view_reading_list\">View Reading List</string>\n    <string name=\"view_books_read\">View Books Read</string>\n    <string name=\"update_your_username_and_or_password_user_page\">Update your Username and/or Password</string>\n    <string name=\"update_username\">Update Username</string>\n    <string name=\"update_password\">Update Password</string>\n    <string name=\"delete_a_book_from_lists\">Delete a Book From Lists</string>\n    <string name=\"delete_book\">Delete Book</string>\n    <string name=\"delete_all_books_nfrom_logs\">Delete All Books \\nFrom Logs</string>\n    <string name=\"delete_books\">Delete Books</string>\n    <string name=\"delete_user_information_nand_logs\">Delete User Information \\nand Logs</string>\n    <string name=\"delete_account\">Delete Account</string>\n\n\n</resources>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/res/values/strings.xml	(date 1745466009225)
+@@ -31,4 +31,16 @@
+     <string name="delete_account">Delete Account</string>
+ 
+ 
++
++    <string name="enter_book_title">Enter Book Title</string>
++    <string name="add_book">Add Book</string>
++    <string name="reading_list">Reading List</string>
++    <string name="add_book_to_list">Add Book to List</string>
++    <string name="enter_book_id">Enter Book ID</string>
++    <string name="add_to_finished_books">Add to Finished Books</string>
++    <string name="reading_list_username">Reading List \'username\'</string>
++    <string name="books_read">Books Read</string>
++    <string name="books_read_username">Books Read username</string>
++
++
+ </resources>
+Index: app/src/main/java/com/cst338/booklog/database/BookLogDatabase.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database;\n\nimport android.content.Context;\nimport android.util.Log;\n\nimport androidx.annotation.NonNull;\nimport androidx.room.Database;\nimport androidx.room.Room;\nimport androidx.room.RoomDatabase;\nimport androidx.room.TypeConverters;\nimport androidx.sqlite.db.SupportSQLiteDatabase;\n\nimport com.cst338.booklog.database.entities.Book;\nimport com.cst338.booklog.database.entities.BookLog;\nimport com.cst338.booklog.database.entities.User;\nimport com.cst338.booklog.database.entities.Genre;\nimport com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;\n\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\n\n@TypeConverters(LocalDateTypeConverters.class)\n@Database(entities = {BookLog.class, User.class, Book.class, Genre.class}, version = 1, exportSchema = false)\npublic abstract class BookLogDatabase extends RoomDatabase {\n    public static final String USER_TABLE = \"userTable\";\n    public static final String BOOK_TABLE = \"bookTable\";\n    private static final String DATABASE_NAME = \"bookLogDatabase\";\n    public static final String BOOK_LOG_TABLE = \"bookLogTable\";\n    public static final String GENRE_TABLE = \"genreTable\";\n    private static volatile BookLogDatabase INSTANCE;\n    private static final int NUMBER_OF_THREADS = 1;\n    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);\n\n    static BookLogDatabase getDatabase(final Context context) {\n        if (INSTANCE == null) {\n            synchronized (BookLogDatabase.class) {\n                if (INSTANCE == null) {\n                    INSTANCE = Room.databaseBuilder(\n                                    context.getApplicationContext(),\n                                    BookLogDatabase.class,\n                                    DATABASE_NAME\n                            )\n                            .fallbackToDestructiveMigration()\n                            .addCallback(addDefaultValues)\n                            .build();\n                }\n            }\n        }\n        return INSTANCE;\n    }\n\n    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {\n        @Override\n        public void onCreate(@NonNull SupportSQLiteDatabase db) {\n            super.onCreate(db);\n            Log.i(\"BOOKLOG\", \"DATABASE CREATED!\");\n            databaseWriteExecutor.execute(() -> {\n                UserDAO dao = INSTANCE.userDAO();\n                dao.deleteAll();\n                User admin = new User(\"admin1\", \"admin1\");\n                admin.setAdmin(true);\n                dao.insert(admin);\n                User testUser1 = new User(\"testuser1\", \"testuser1\");\n                dao.insert(testUser1);\n\n                GenreDAO genreDao = INSTANCE.genreDAO();\n                genreDao.deleteAll();\n                genreDao.insert(new Genre(\"Fiction\"));\n                genreDao.insert(new Genre(\"Non-Fiction\"));\n                genreDao.insert(new Genre(\"Fantasy\"));\n                genreDao.insert(new Genre(\"Romance\"));\n                genreDao.insert(new Genre(\"Science Fiction\"));\n            });\n        }\n    };\n\n    public abstract GenreDAO genreDAO();\n    public abstract UserDAO userDAO();\n    public abstract BookDAO bookDAO();\n    public abstract BookLogDAO bookLogDAO();\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookLogDatabase.java b/app/src/main/java/com/cst338/booklog/database/BookLogDatabase.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookLogDatabase.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookLogDatabase.java	(date 1745466445906)
+@@ -1,3 +1,6 @@
++/**
++ * Author: Sydney Stalker
++ */
+ package com.cst338.booklog.database;
+ 
+ import android.content.Context;
+@@ -12,21 +15,20 @@
+ 
+ import com.cst338.booklog.database.entities.Book;
+ import com.cst338.booklog.database.entities.BookLog;
++
+ import com.cst338.booklog.database.entities.User;
+-import com.cst338.booklog.database.entities.Genre;
+ import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
+ 
+ import java.util.concurrent.ExecutorService;
+ import java.util.concurrent.Executors;
+ 
+ @TypeConverters(LocalDateTypeConverters.class)
+-@Database(entities = {BookLog.class, User.class, Book.class, Genre.class}, version = 1, exportSchema = false)
++@Database(entities = {BookLog.class, User.class, Book.class}, version = 1, exportSchema = false)
+ public abstract class BookLogDatabase extends RoomDatabase {
+     public static final String USER_TABLE = "userTable";
+     public static final String BOOK_TABLE = "bookTable";
+     private static final String DATABASE_NAME = "bookLogDatabase";
+     public static final String BOOK_LOG_TABLE = "bookLogTable";
+-    public static final String GENRE_TABLE = "genreTable";
+     private static volatile BookLogDatabase INSTANCE;
+     private static final int NUMBER_OF_THREADS = 1;
+     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+@@ -48,7 +50,6 @@
+         }
+         return INSTANCE;
+     }
+-
+     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
+         @Override
+         public void onCreate(@NonNull SupportSQLiteDatabase db) {
+@@ -62,20 +63,13 @@
+                 dao.insert(admin);
+                 User testUser1 = new User("testuser1", "testuser1");
+                 dao.insert(testUser1);
+-
+-                GenreDAO genreDao = INSTANCE.genreDAO();
+-                genreDao.deleteAll();
+-                genreDao.insert(new Genre("Fiction"));
+-                genreDao.insert(new Genre("Non-Fiction"));
+-                genreDao.insert(new Genre("Fantasy"));
+-                genreDao.insert(new Genre("Romance"));
+-                genreDao.insert(new Genre("Science Fiction"));
+             });
+         }
+     };
+ 
+-    public abstract GenreDAO genreDAO();
+-    public abstract UserDAO userDAO();
+     public abstract BookDAO bookDAO();
++
++    public abstract UserDAO userDAO();
++
+     public abstract BookLogDAO bookLogDAO();
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/GenreDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database;\n\nimport androidx.room.Dao;\nimport androidx.room.Insert;\nimport androidx.room.Query;\n\nimport com.cst338.booklog.database.entities.Genre;\n\n@Dao\npublic interface GenreDAO {\n    @Insert\n    void insert(Genre fiction);\n\n    @Query(\"DELETE FROM \" + BookLogDatabase.GENRE_TABLE)\n    void deleteAll();\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/GenreDAO.java b/app/src/main/java/com/cst338/booklog/database/GenreDAO.java
+--- a/app/src/main/java/com/cst338/booklog/database/GenreDAO.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/GenreDAO.java	(date 1745466572695)
+@@ -1,16 +1,16 @@
+-package com.cst338.booklog.database;
+-
+-import androidx.room.Dao;
+-import androidx.room.Insert;
+-import androidx.room.Query;
+-
+-import com.cst338.booklog.database.entities.Genre;
+-
+-@Dao
+-public interface GenreDAO {
+-    @Insert
+-    void insert(Genre fiction);
+-
+-    @Query("DELETE FROM " + BookLogDatabase.GENRE_TABLE)
+-    void deleteAll();
+-}
+\ No newline at end of file
++//package com.cst338.booklog.database;
++//
++//import androidx.room.Dao;
++//import androidx.room.Insert;
++//import androidx.room.Query;
++//
++//import com.cst338.booklog.database.entities.Genre;
++//
++//@Dao
++//public interface GenreDAO {
++//    @Insert
++//    void insert(Genre fiction);
++//
++//    @Query("DELETE FROM " + BookLogDatabase.GENRE_TABLE)
++//    void deleteAll();
++//}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/BookDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database;\n\nimport androidx.lifecycle.LiveData;\nimport androidx.room.Dao;\nimport androidx.room.Delete;\nimport androidx.room.Insert;\nimport androidx.room.Query;\nimport androidx.room.Update;\n\nimport com.cst338.booklog.database.entities.Book;\n\nimport java.util.List;\n\n@Dao\npublic interface BookDAO {\n    @Insert\n    void insert(Book book);\n\n    @Update\n    void update(Book book);\n\n    @Delete\n    void delete(Book book);\n\n    @Query(\"SELECT * FROM \" + BookLogDatabase.BOOK_TABLE + \" ORDER BY author\")\n    LiveData<List<Book>> getAllBooks();\n\n    @Query(\"SELECT * FROM \" + BookLogDatabase.BOOK_TABLE + \" WHERE genre = :bookGenre\")\n    LiveData<List<Book>> getBooksByGenre(String bookGenre);\n\n    @Query(\"SELECT * FROM \" + BookLogDatabase.BOOK_TABLE + \" WHERE title = :bookTitle\")\n    LiveData<List<Book>> getBookByTitle(String bookTitle);\n\n    @Query(\"SELECT * FROM \" + BookLogDatabase.BOOK_TABLE + \" WHERE id = :bookId\")\n    LiveData<Book> getBookById(int bookId);\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookDAO.java b/app/src/main/java/com/cst338/booklog/database/BookDAO.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookDAO.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookDAO.java	(date 1745466616911)
+@@ -1,5 +1,6 @@
+ package com.cst338.booklog.database;
+ 
++
+ import androidx.lifecycle.LiveData;
+ import androidx.room.Dao;
+ import androidx.room.Delete;
+@@ -22,15 +23,21 @@
+     @Delete
+     void delete(Book book);
+ 
+-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER BY author")
++    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author DESC")
+     LiveData<List<Book>> getAllBooks();
+ 
+-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre = :bookGenre")
+-    LiveData<List<Book>> getBooksByGenre(String bookGenre);
++//    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre == :bookGenre")
++//    LiveData<List<Book>> getBooksByGenre(String bookGenre);
+ 
+-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title = :bookTitle")
++    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookTitle")
+     LiveData<List<Book>> getBookByTitle(String bookTitle);
+ 
+-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id = :bookId")
+-    LiveData<Book> getBookById(int bookId);
++    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookId ")
++    LiveData<List<Book>> getBookById(String bookId);
++
++//    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookAuthor")
++//    LiveData<List<Book>> getBooksByAuthor(String bookAuthor);
++//
++
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/entities/BookLog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database.entities;\n\nimport androidx.room.Entity;\nimport androidx.room.ForeignKey;\nimport androidx.room.PrimaryKey;\n\nimport com.cst338.booklog.database.BookLogDatabase;\n\nimport java.time.LocalDateTime;\n\n@Entity (tableName = BookLogDatabase.BOOK_LOG_TABLE,\n        foreignKeys = {@ForeignKey(\n            entity = User.class,\n            parentColumns = \"id\",\n            childColumns = \"userId\",\n            onUpdate = ForeignKey.CASCADE,\n            onDelete = ForeignKey.CASCADE),\n        @ForeignKey(\n            entity = Book.class,\n            parentColumns = \"id\",\n            childColumns = \"bookId\",\n            onUpdate = ForeignKey.CASCADE,\n            onDelete = ForeignKey.CASCADE)})\npublic class BookLog {\n    @PrimaryKey (autoGenerate = true)\n    private int id;\n    private int userId;\n    private int bookId;\n    LocalDateTime dateFinished;\n\n    public int getId(){\n        return id;\n    }\n\n    public void setId(int id) {\n        this.id = id;\n    }\n\n    public int getUserId() {\n        return userId;\n    }\n\n    public void setUserId(int userId) {\n        this.userId = userId;\n    }\n\n    public int getBookId() {\n        return bookId;\n    }\n\n    public void setBookId(int bookId) {\n        this.bookId = bookId;\n    }\n\n    public LocalDateTime getDateFinished() {\n        return dateFinished;\n    }\n\n    public void setDateFinished(LocalDateTime dateFinished) {\n        this.dateFinished = dateFinished;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/entities/BookLog.java b/app/src/main/java/com/cst338/booklog/database/entities/BookLog.java
+--- a/app/src/main/java/com/cst338/booklog/database/entities/BookLog.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/entities/BookLog.java	(date 1745466330868)
+@@ -10,17 +10,17 @@
+ 
+ @Entity (tableName = BookLogDatabase.BOOK_LOG_TABLE,
+         foreignKeys = {@ForeignKey(
+-            entity = User.class,
+-            parentColumns = "id",
+-            childColumns = "userId",
+-            onUpdate = ForeignKey.CASCADE,
+-            onDelete = ForeignKey.CASCADE),
+-        @ForeignKey(
+-            entity = Book.class,
+-            parentColumns = "id",
+-            childColumns = "bookId",
+-            onUpdate = ForeignKey.CASCADE,
+-            onDelete = ForeignKey.CASCADE)})
++                entity = User.class,
++                parentColumns = "id",
++                childColumns = "userId",
++                onUpdate = ForeignKey.CASCADE,
++                onDelete = ForeignKey.CASCADE),
++                @ForeignKey(
++                        entity = Book.class,
++                        parentColumns = "id",
++                        childColumns = "bookId",
++                        onUpdate = ForeignKey.CASCADE,
++                        onDelete = ForeignKey.CASCADE)})
+ public class BookLog {
+     @PrimaryKey (autoGenerate = true)
+     private int id;
+@@ -59,4 +59,4 @@
+     public void setDateFinished(LocalDateTime dateFinished) {
+         this.dateFinished = dateFinished;
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/entities/Book.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database.entities;\n\nimport androidx.room.Entity;\nimport androidx.room.PrimaryKey;\n\nimport com.cst338.booklog.database.BookLogDatabase;\n\nimport java.util.Objects;\n\n@Entity(tableName = BookLogDatabase.BOOK_LOG_TABLE)\npublic class Book {\n    @PrimaryKey(autoGenerate = true)\n    private int id;\n    private String title;\n    private String author;\n    private String genre;\n\n    public Book(String title, String author, String genre) {\n        this.title = title;\n        this.author = author;\n        this.genre = genre;\n    }\n\n    @Override\n    public boolean equals(Object o) {\n        if (o == null || getClass() != o.getClass()) return false;\n        Book book = (Book) o;\n        return id == book.id && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(genre, book.genre);\n    }\n\n    @Override\n    public int hashCode() {\n        return Objects.hash(id, title, author, genre);\n    }\n\n    public int getId() {\n        return id;\n    }\n\n    public void setId(int id) {\n        this.id = id;\n    }\n\n    public String getTitle() {\n        return title;\n    }\n\n    public void setTitle(String title) {\n        this.title = title;\n    }\n\n    public String getAuthor() {\n        return author;\n    }\n\n    public void setAuthor(String author) {\n        this.author = author;\n    }\n\n    public String getGenre() {\n        return genre;\n    }\n\n    public void setGenre(String genre) {\n        this.genre = genre;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/entities/Book.java b/app/src/main/java/com/cst338/booklog/database/entities/Book.java
+--- a/app/src/main/java/com/cst338/booklog/database/entities/Book.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/entities/Book.java	(date 1745466316148)
+@@ -64,4 +64,4 @@
+     public void setGenre(String genre) {
+         this.genre = genre;
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/BookLogDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database;\n\nimport androidx.lifecycle.LiveData;\nimport androidx.room.Dao;\nimport androidx.room.Insert;\nimport androidx.room.OnConflictStrategy;\nimport androidx.room.Query;\n\nimport com.cst338.booklog.database.entities.BookLog;\n\nimport java.util.List;\n\n@Dao\npublic interface BookLogDAO {\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\n    void insert(BookLog bookLog);\n\n    @Query(\"Select * from \" + BookLogDatabase.BOOK_LOG_TABLE + \" order by userId DESC\")\n    List<BookLog> getAllRecords();\n\n    @Query(\"Select * from \" + BookLogDatabase.BOOK_LOG_TABLE + \" WHERE userId = :loggedInUserId order by dateFinished DESC\")\n    LiveData<List<BookLog>> getRecordsetUserIdLiveData(int loggedInUserId);\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookLogDAO.java b/app/src/main/java/com/cst338/booklog/database/BookLogDAO.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookLogDAO.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookLogDAO.java	(date 1745466435894)
+@@ -20,4 +20,4 @@
+ 
+     @Query("Select * from " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :loggedInUserId order by dateFinished DESC")
+     LiveData<List<BookLog>> getRecordsetUserIdLiveData(int loggedInUserId);
+-}
++}
+\ No newline at end of file

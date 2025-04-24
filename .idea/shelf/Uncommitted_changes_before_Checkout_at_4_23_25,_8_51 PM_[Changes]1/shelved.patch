@@ -1,0 +1,51 @@
+Index: app/src/main/java/com/cst338/booklog/database/BookAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/**\n * Author: Sydney Stalker\n */\npackage com.cst338.booklog.database;\n\nimport android.view.LayoutInflater;\nimport android.view.View;\nimport android.view.ViewGroup;\nimport android.widget.TextView;\n\nimport androidx.annotation.NonNull;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport com.cst338.booklog.database.entities.Book;\n\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.function.Consumer;\n\npublic class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {\n    private List<Book> books = new ArrayList<>();\n    private final Consumer<Book> onBookClick;\n\n    public BookAdapter(Consumer<Book> onBookClick) {\n        this.onBookClick = onBookClick;\n    }\n\n    public void submitList(List<Book> newBooks) {\n        this.books = newBooks;\n        notifyDataSetChanged();\n    }\n\n    @NonNull\n    @Override\n    public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\n        View view = LayoutInflater.from(parent.getContext())\n                .inflate(android.R.layout.simple_list_item_2, parent, false);\n        return new BookViewHolder(view);\n    }\n\n    @Override\n    public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {\n        Book book = books.get(position);\n        ((TextView) holder.itemView.findViewById(android.R.id.text1)).setText(book.getTitle());\n        ((TextView) holder.itemView.findViewById(android.R.id.text2)).setText(book.getGenre());\n\n        holder.itemView.setOnClickListener(v -> onBookClick.accept(book));\n    }\n\n    @Override\n    public int getItemCount() {\n        return books.size();\n    }\n\n    static class BookViewHolder extends RecyclerView.ViewHolder {\n        public BookViewHolder(@NonNull View itemView) {\n            super(itemView);\n        }\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookAdapter.java b/app/src/main/java/com/cst338/booklog/database/BookAdapter.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookAdapter.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookAdapter.java	(date 1745466350836)
+@@ -57,4 +57,4 @@
+             super(itemView);
+         }
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database;\n\nimport android.app.Application;\nimport android.util.Log;\nimport androidx.lifecycle.LiveData;\nimport com.cst338.booklog.database.entities.User;\n\nimport java.lang.reflect.Array;\nimport java.util.ArrayList;\nimport java.util.concurrent.Callable;\nimport java.util.concurrent.ExecutionException;\nimport java.util.concurrent.Future;\n\npublic class UserRepository {\n    private UserDAO userDAO;\n    private ArrayList<User> allUsers;\n    private static UserRepository repository;\n\n    private UserRepository(Application application) {\n        BookLogDatabase db = BookLogDatabase.getDatabase(application);\n        this.userDAO = db.userDAO();\n        this.allUsers = (ArrayList<User>) this.userDAO.getAllUsers();\n    }\n\n    public static UserRepository getRepository (Application application){\n        if(repository != null){\n            return repository;\n        }\n        Future<UserRepository> future = BookLogDatabase.databaseWriteExecutor.submit(\n                new Callable<UserRepository>() {\n                    @Override\n                    public UserRepository call() throws Exception {\n                        return new UserRepository(application);\n                    }\n                }\n        );\n        try{\n            return future.get();\n        } catch (InterruptedException | ExecutionException e){\n            Log.d(\"BOOKLOG\", \"Problem getting GymLogRepository, thread error.\");\n        }\n        return null;\n    }\n\n    public ArrayList<User> getAllUsers() {\n        Future<ArrayList<User>> future = BookLogDatabase.databaseWriteExecutor.submit(\n                new Callable<ArrayList<User>>() {\n                    @Override\n                    public ArrayList<User> call() throws Exception {\n                        return (ArrayList<User>) userDAO.getAllUsers();\n                    }\n                }\n        );\n        try {\n            return future.get();\n        } catch (InterruptedException | ExecutionException e){\n            Log.i(\"BOOKLOG\", \"Problem when getting all GymLogs in the repository\");\n        }\n        return null;\n    }\n\n    public void insertUser(User... user){\n        BookLogDatabase.databaseWriteExecutor.execute(()->{\n            userDAO.insert(user);\n        });\n    }\n\n    public LiveData<User> getUserByUserName(String username) {\n        return userDAO.getUserByUserName(username);\n    }\n\n    public LiveData<User> getUserByUserId(int userId) {\n        return userDAO.getUserByUserId(userId);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/UserRepository.java b/app/src/main/java/com/cst338/booklog/database/UserRepository.java
+--- a/app/src/main/java/com/cst338/booklog/database/UserRepository.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/UserRepository.java	(date 1745466586923)
+@@ -72,4 +72,4 @@
+     public LiveData<User> getUserByUserId(int userId) {
+         return userDAO.getUserByUserId(userId);
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/com/cst338/booklog/database/BookLogRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cst338.booklog.database;\n\nimport android.app.Application;\nimport android.util.Log;\n\nimport androidx.lifecycle.LiveData;\n\nimport com.cst338.booklog.database.entities.BookLog;\nimport com.cst338.booklog.MainActivity;\nimport com.cst338.booklog.database.entities.User;\n\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.concurrent.Callable;\nimport java.util.concurrent.ExecutionException;\nimport java.util.concurrent.Future;\n\npublic class BookLogRepository {\n\n    private final BookLogDAO bookLogDAO;\n    private final UserDAO userDAO;\n    private static BookLogRepository repository;\n\n    private BookLogRepository(Application application) {\n        BookLogDatabase db = BookLogDatabase.getDatabase(application);\n        this.bookLogDAO = db.bookLogDAO();\n        this.userDAO = db.userDAO();\n        ArrayList<BookLog> allLogs = (ArrayList<BookLog>) this.bookLogDAO.getAllRecords();\n    }\n\n    public static BookLogRepository getRepository(Application application) {\n        if (repository != null) {\n            return repository;\n        }\n        Future<BookLogRepository> future = BookLogDatabase.databaseWriteExecutor.submit(\n                new Callable<BookLogRepository>() {\n                    @Override\n                    public BookLogRepository call() throws Exception {\n                        return new BookLogRepository(application);\n                    }\n                }\n        );\n        try {\n            return future.get();\n        } catch (InterruptedException | ExecutionException e) {\n            Log.d(\"BOOKLOG\", \"Problem getting BookLogRepository, thread error.\");\n        }\n        return null;\n    }\n\n    public ArrayList<BookLog> getAllLogs() {\n        Future<ArrayList<BookLog>> future = BookLogDatabase.databaseWriteExecutor.submit(\n                new Callable<ArrayList<BookLog>>() {\n                    @Override\n                    public ArrayList<BookLog> call() throws Exception {\n                        return (ArrayList<BookLog>) bookLogDAO.getAllRecords();\n                    }\n                }\n        );\n        try {\n            return future.get();\n        } catch (InterruptedException | ExecutionException e) {\n            e.printStackTrace();\n            Log.i(\"BOOKLOG\", \"Problem when getting all BookLog in the repository.\");\n        }\n        return null;\n    }\n\n    public void insertBookLog(BookLog bookLog) {\n        BookLogDatabase.databaseWriteExecutor.execute(() ->\n        {\n            bookLogDAO.insert(bookLog);\n        });\n    }\n\n    public void insertUser(User... user) {\n        BookLogDatabase.databaseWriteExecutor.execute(() ->\n        {\n            userDAO.insert(user);\n        });\n    }\n\n    public LiveData<User> getUserByUsername(String username) {\n        return userDAO.getUserByUserName(username);\n    }\n\n    public LiveData<User> getUserByUserId(int userId) {\n        return userDAO.getUserByUserId(userId);\n    }\n\n    public LiveData<List<BookLog>> getAllLogsByUserIdLiveData(int loggedInUserId) {\n        return bookLogDAO.getRecordsetUserIdLiveData(loggedInUserId);\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/cst338/booklog/database/BookLogRepository.java b/app/src/main/java/com/cst338/booklog/database/BookLogRepository.java
+--- a/app/src/main/java/com/cst338/booklog/database/BookLogRepository.java	(revision 0bf4996e4c0b9ab04fdfb5a2a9457817eb6b0fb9)
++++ b/app/src/main/java/com/cst338/booklog/database/BookLogRepository.java	(date 1745466456187)
+@@ -92,4 +92,4 @@
+         return bookLogDAO.getRecordsetUserIdLiveData(loggedInUserId);
+     }
+ 
+-}
++}
+\ No newline at end of file
