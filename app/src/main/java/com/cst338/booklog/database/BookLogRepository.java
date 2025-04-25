@@ -125,7 +125,7 @@ public class BookLogRepository {
         });
     }
 
-    public LiveData<Object> getFinishedBooksByUser(int userId) {
-
+    public LiveData<List<BookLog>> getFinishedBooksByUser(int userId) {
+        return bookLogDAO.getFinishedBooksByUser(userId);
     }
 }

@@ -43,8 +43,7 @@ public interface BookLogDAO {
     @Query("DELETE FROM " + BookLogDatabase.USER_TABLE + " WHERE isAdmin = 0")
     void deleteAllNonAdminUsers();
 
-
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE isFinished = true")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :userId & isFinished == true")
     LiveData<List<BookLog>> getFinishedBooksByUser(int userId);
 
 

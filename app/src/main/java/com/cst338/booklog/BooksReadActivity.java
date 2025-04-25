@@ -34,37 +34,37 @@ public class BooksReadActivity extends AppCompatActivity {
         binding = BooksReadPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        bookRepo = BookRepository.getRepository(getApplication());
-        userRepo = UserRepository.getRepository(getApplication());
-
-        username = getIntent().getStringExtra("USERNAME");
-        binding.booksReadHeader.setText("Books Read   " + username);
-
-        userRepo.getUserByUserName(username).observe(this, user -> {
-            if (user != null) {
-                userId = user.getId();
-                setupRecyclerView();
-                loadFinishedBooks();
-            }
-        });
-
-        binding.addBookButton.setOnClickListener(v -> {
-            Intent intent = BookListActivity.intentFactory(this, username);
-            startActivity(intent);
-        });
+//        bookRepo = BookRepository.getRepository(getApplication());
+//        userRepo = UserRepository.getRepository(getApplication());
+//
+//        username = getIntent().getStringExtra("USERNAME");
+//        binding.booksReadHeader.setText("Books Read   " + username);
+//
+//        userRepo.getUserByUserName(username).observe(this, user -> {
+//            if (user != null) {
+//                userId = user.getId();
+//                setupRecyclerView();
+//                loadFinishedBooks();
+//            }
+//        });
+//
+//        binding.addBookButton.setOnClickListener(v -> {
+//            Intent intent = BookListActivity.intentFactory(this, username);
+//            startActivity(intent);
+//        });
     }
 
     private void setupRecyclerView() {
-        adapter = new BookAdapter(book -> {}); // No click action needed
+        adapter = new BookAdapter(book -> {});
         binding.booksReadRecycler.setAdapter(adapter);
         binding.booksReadRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void loadFinishedBooks() {
-        bookLogRepo.getFinishedBooksByUser(userId).observe(this, books -> {
-            adapter.submitList(books);
-        });
-    }
+//    private void loadFinishedBooks() {
+//        bookLogRepo.getFinishedBooksByUser(userId).observe(this, books -> {
+//            adapter.submitList(books);
+//        });
+//    }
 
     public static Intent intentFactory(Context context, String username) {
         Intent intent = new Intent(context, BooksReadActivity.class);

@@ -19,6 +19,7 @@ import com.cst338.booklog.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private static final String MAIN_ACTIVITY_USER_ID ="com.cst338.booklog.MAIN_ACTIVITY_USER_ID";
     static final String SHARED_PREFERENCE_USERID_KEY = "com.cst338.booklog.SHARED_PREFERENCE_USERID_KEY";
+
     private static final int LOGGED_OUT = -1;
     private static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.cst338.booklog.SAVED_INSTANCE_STATE_USERID_KEY";
     private ActivityMainBinding binding;

@@ -25,8 +25,6 @@ public class BookViewModel extends AndroidViewModel {
         return repository.getAllBooks();
     }
 
-//    public LiveData<List<Book>> getBooksByGenre(String genre) {
-//        return repository.getBooksByGenre(genre);
-//    }
+
 }
 
