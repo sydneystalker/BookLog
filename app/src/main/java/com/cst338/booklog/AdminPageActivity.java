@@ -1,5 +1,7 @@
 package com.cst338.booklog;
 
+import static com.cst338.booklog.MainActivity.SHARED_PREFERENCE_USERID_KEY;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,12 +48,35 @@ public class AdminPageActivity extends AppCompatActivity {
         setupButtons();
     }
 
+
     private void setupButtons() {
         binding.changeUsernameButton.setOnClickListener(v -> changeUsername());
         binding.changePasswordButton.setOnClickListener(v -> changePassword());
         binding.deleteUserButton.setOnClickListener(v -> deleteUser());
         binding.resetDatabaseButton.setOnClickListener(v -> resetDatabase());
+        binding.usernameTextView.setOnClickListener(v -> showLogoutDialog());
     }
+
+
+    private void showLogoutDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Logout", (dialog, which) -> {
+                    SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key),
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(getString(R.string.preference_userId_key), -1);
+                    editor.apply();
+
+                    startActivity(LoginPageActivity.loginIntentFactory(getApplicationContext()));
+                    finish();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+
 
     private void changeUsername() {
         String newUsername = binding.usernameEditText.getText().toString().trim();

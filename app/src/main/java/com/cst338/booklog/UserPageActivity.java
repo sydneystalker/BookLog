@@ -1,7 +1,9 @@
 package com.cst338.booklog;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -41,7 +43,7 @@ public class UserPageActivity extends AppCompatActivity {
         userRepository.getUserByUserId(loggedInUserId).observe(this, user -> {
             this.user = user;
             if (user != null) {
-                binding.usernameTextView.setText(user.getUserName());
+                binding.usernameTextView2.setText(user.getUserName());
             }
         });
     }
@@ -54,6 +56,26 @@ public class UserPageActivity extends AppCompatActivity {
         binding.deleteAccountButton.setOnClickListener(v -> deleteAccount());
         binding.viewReadingListButton.setOnClickListener(v -> viewReadingList());
         binding.viewBooksReadButton.setOnClickListener(v -> viewBooksRead());
+        binding.usernameTextView2.setOnClickListener(v -> showLogoutDialog());
+
+    }
+
+    private void showLogoutDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Logout", (dialog, which) -> {
+                    SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key),
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(getString(R.string.preference_userId_key), -1);
+                    editor.apply();
+
+                    startActivity(LoginPageActivity.loginIntentFactory(getApplicationContext()));
+                    finish();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     private void updateUsername() {
@@ -70,7 +92,7 @@ public class UserPageActivity extends AppCompatActivity {
             } else {
                 user.setUserName(newUsername);
                 userRepository.updateUser(user);
-                binding.usernameTextView.setText(newUsername);
+                binding.usernameTextView2.setText(newUsername);
                 toastMaker("Username updated successfully");
                 binding.usernameEditText.setText("");
             }
