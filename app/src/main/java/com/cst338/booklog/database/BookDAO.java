@@ -24,7 +24,7 @@ public interface BookDAO {
     void delete(Book book);
 
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author by DESC")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author DESC")
     LiveData<List<Book>> getAllBooks();
 
     @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre = :bookGenre")
