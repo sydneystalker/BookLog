@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".AddBookActivity">
+
+    <TextView
+        android:id="@+id/pageHeaderTV"
+        android:layout_width="360dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/add_a_book"
+        android:textSize="44sp"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        tools:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/enterBookTitleTV" />
+
+    <TextView
+        android:id="@+id/enterBookTitleTV"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:labelFor="@+id/enterBookTitleET"
+        android:text="@string/enter_title"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/enterBookTitleET"
+        app:layout_constraintTop_toTopOf="@id/enterBookTitleET"
+        tools:textAlignment="textEnd" />
+
+    <EditText
+        android:id="@+id/enterBookTitleET"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginBottom="176dp"
+        android:textSize="20sp"
+        android:autofillHints="username"
+        android:gravity="center"
+        tools:textAlignment="center"
+        android:background="@color/white"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/enterBookAuthorTV"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:labelFor="@+id/enterBookAuthorET"
+        android:text="@string/enter_author"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/enterBookAuthorET"
+        app:layout_constraintTop_toBottomOf="@id/enterBookTitleTV"
+        tools:textAlignment="textEnd" />
+
+    <EditText
+        android:id="@+id/enterBookAuthorET"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="password"
+        android:textSize="20sp"
+        android:gravity="center"
+        tools:textAlignment="center"
+        android:background="@color/white"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enterBookTitleET" />
+
+    <TextView
+        android:id="@+id/enterBookGenreTV"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:labelFor="@+id/enterBookGenreET"
+        android:text="@string/enter_genre"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/enterBookGenreET"
+        app:layout_constraintTop_toBottomOf="@+id/enterBookAuthorET"
+        tools:textAlignment="textEnd" />
+
+    <EditText
+        android:id="@+id/enterBookGenreET"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        tools:textAlignment="center"
+        android:autofillHints="password"
+        android:textSize="20sp"
+        android:background="@color/white"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterBookAuthorET" />
+
+    <Button
+        android:id="@+id/addToListButton"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/add_to_list"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterBookGenreET" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
