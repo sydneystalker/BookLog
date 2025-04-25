@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cst338.booklog.database.BookAdapter;
+import com.cst338.booklog.database.BookLogRepository;
 import com.cst338.booklog.database.BookRepository;
 import com.cst338.booklog.database.UserRepository;
 import com.cst338.booklog.database.entities.Book;
@@ -22,6 +23,7 @@ public class BooksReadActivity extends AppCompatActivity {
     private BooksReadPageBinding binding;
     private BookRepository bookRepo;
     private UserRepository userRepo;
+    private BookLogRepository bookLogRepo;
     private String username;
     private int userId;
     private BookAdapter adapter;
@@ -38,7 +40,7 @@ public class BooksReadActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("USERNAME");
         binding.booksReadHeader.setText("Books Read   " + username);
 
-        userRepo.getUserByUsername(username).observe(this, user -> {
+        userRepo.getUserByUserName(username).observe(this, user -> {
             if (user != null) {
                 userId = user.getId();
                 setupRecyclerView();
@@ -59,7 +61,7 @@ public class BooksReadActivity extends AppCompatActivity {
     }
 
     private void loadFinishedBooks() {
-        bookRepo.getFinishedBooksByUser(userId).observe(this, books -> {
+        bookLogRepo.getFinishedBooksByUser(userId).observe(this, books -> {
             adapter.submitList(books);
         });
     }
