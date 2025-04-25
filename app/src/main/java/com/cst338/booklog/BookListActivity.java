@@ -3,65 +3,98 @@
  */
 package com.cst338.booklog;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.cst338.booklog.database.BookAdapter;
-import com.cst338.booklog.database.BookViewModel;
+import com.cst338.booklog.database.BookRepository;
+import com.cst338.booklog.database.UserRepository;
+import com.cst338.booklog.database.entities.Book;
+import com.cst338.booklog.database.entities.BookLog;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 public class BookListActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    private ActivityBookListBinding binding;
+    private BookRepository bookRepo;
+    private UserRepository userRepo;
     private BookAdapter adapter;
-    private BookViewModel bookViewModel;
-    private Spinner genreSpinner;
+    private String username;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.book_list_activity);
+        binding = ActivityBookListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        recyclerView = findViewById(R.id.bookRecyclerView);
-        genreSpinner = findViewById(R.id.genreSpinner);
+        bookRepo = BookRepository.getRepository(getApplication());
+        userRepo = UserRepository.getRepository(getApplication());
 
-        adapter = new BookAdapter(new ArrayList<>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        username = getIntent().getStringExtra("USERNAME");
 
-        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+        userRepo.getUserByUsername(username).observe(this, user -> {
+            if (user != null) {
+                userId = user.getId();
+                setupRecyclerView();
+                setupAddButton();
+            }
+        });
 
-        setupSpinner();
     }
 
-    private void setupSpinner() {
-        String[] genres = {"All", "Non-Fiction", "Fantasy", "Romance", "Mystery", "Science Fiction", "Horror"};
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genres);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genreSpinner.setAdapter(spinnerAdapter);
+    private void setupRecyclerView() {
+        adapter = new BookAdapter(this::onMarkAsFinished);
+        binding.bookListRecycler.setAdapter(adapter);
+        binding.bookListRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        bookRepo.getUnreadBooksByUser(userId).observe(this, new Observer<List<Book>>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selectedGenre = parent.getItemAtPosition(pos).toString();
-                if (selectedGenre.equals("All")) {
-                    bookViewModel.getAllBooks().observe(BookListActivity.this, adapter::setBooks);
-                } else {
-                    bookViewModel.getBooksByGenre(selectedGenre).observe(BookListActivity.this, adapter::setBooks);
-                }
+            public void onChanged(List<Book> books) {
+                adapter.submitList(books);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
-}
 
+    private void setupAddButton() {
+        binding.addBookButton.setOnClickListener(v -> {
+            String title = binding.bookTitleInput.getText().toString().trim();
+            String author = binding.bookAuthorInput.getText().toString().trim();
+            String genre = binding.bookGenreInput.getText().toString().trim();
+
+            if (!title.isEmpty() && !author.isEmpty() && !genre.isEmpty()) {
+                Book newBook = new Book(0, title, author, genre);
+                bookRepo.insertBook(newBook, insertedBookId -> {
+                    BookLog bookLog = new BookLog(userId, insertedBookId, false, null);
+                    bookRepo.insertBookLog(bookLog);
+                });
+
+                binding.bookTitleInput.setText("");
+                binding.bookAuthorInput.setText("");
+                binding.bookGenreInput.setText("");
+            }
+        });
+    }
+
+    private void onMarkAsFinished(Book book) {
+        bookRepo.getBookLogByUserAndBook(userId, book.getBookId()).observe(this, bookLog -> {
+            if (bookLog != null) {
+                bookLog.setFinished(true);
+                bookLog.setFinishDate(LocalDateTime.now());
+                bookRepo.updateBookLog(bookLog);
+            }
+        });
+    }
+
+    public static Intent intentFactory(Context context, String username) {
+        Intent intent = new Intent(context, BookListActivity.class);
+        intent.putExtra("USERNAME", username);
+        return intent;
+    }
+}

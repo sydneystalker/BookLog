@@ -13,20 +13,18 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
 import com.cst338.booklog.database.entities.User;
-import com.cst338.booklog.database.entities.Genre;
 import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverters.class)
-@Database(entities = {BookLog.class, User.class, Book.class, Genre.class}, version = 1, exportSchema = false)
+@Database(entities = {BookLog.class, User.class, Book.class}, version = 1, exportSchema = false)
 public abstract class BookLogDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";
     public static final String BOOK_TABLE = "bookTable";
     private static final String DATABASE_NAME = "bookLogDatabase";
     public static final String BOOK_LOG_TABLE = "bookLogTable";
-    public static final String GENRE_TABLE = "genreTable";
     private static volatile BookLogDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 1;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -67,8 +65,9 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
     };
 
-    
-    public abstract UserDAO userDAO();
-    public abstract BookDAO bookDAO();
-    public abstract BookLogDAO bookLogDAO();
+ public abstract BookDAO bookDAO();
+
+ public abstract UserDAO userDAO();
+
+ public abstract BookLogDAO bookLogDAO();
 }
