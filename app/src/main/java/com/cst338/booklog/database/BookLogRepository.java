@@ -125,4 +125,7 @@ public class BookLogRepository {
         });
     }
 
+    public LiveData<Object> getFinishedBooksByUser(int userId) {
+
+    }
 }

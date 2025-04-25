@@ -63,6 +63,7 @@ public class UserPageActivity extends AppCompatActivity {
             return;
         }
 
+        //TODO: this
         userRepository.getUserByUserName(newUsername).observe(this, existingUser -> {
             if (existingUser != null && existingUser.getId() != user.getId()) {
                 toastMaker("Username already taken");
@@ -75,6 +76,7 @@ public class UserPageActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void updatePassword() {
         String newPassword = binding.passwordEditText.getText().toString().trim();

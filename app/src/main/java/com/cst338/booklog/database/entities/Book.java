@@ -3,8 +3,10 @@ package com.cst338.booklog.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.cst338.booklog.database.BookLogDatabase;
+
 import java.util.Objects;
-@Entity(tableName = BookLogDatabase.BOOK_LOG_TABLE)
+@Entity(tableName = BookLogDatabase.BOOK_TABLE)
 public class Book {
     @PrimaryKey(autoGenerate = true)
     private int id;

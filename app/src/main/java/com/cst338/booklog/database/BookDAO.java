@@ -23,8 +23,10 @@ public interface BookDAO {
     @Delete
     void delete(Book book);
 
+    @Query("DELETE from " + BookLogDatabase.BOOK_TABLE)
+    void deleteAllBooks();
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author by DESC")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author DESC")
     LiveData<List<Book>> getAllBooks();
 
     @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre = :bookGenre")
@@ -35,4 +37,6 @@ public interface BookDAO {
 
     @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id = :bookId")
     LiveData<Book> getBookById(int bookId);
+
+
 }
