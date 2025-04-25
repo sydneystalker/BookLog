@@ -1,11 +1,39 @@
 <resources>
     <string name="app_name">BookLog</string>
-    <string name="this_is_the_app_logo" />
-    <string name="username" />
-    <string name="password" />
-    <string name="login" />
-    <string name="first_time_user" />
-    <string name="create_account" />
+    <string name="password">Password:</string>
+    <string name="username">Username:</string>
+    <string name="first_time_user">First time user?</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="this_is_the_app_logo">This is the app logo.</string>
+    <string name="preference_file_key">BookLogPreferenceFileName</string>
+    <string name="preference_userId_key">BookLogPreferenceUserIdKey</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="enter_password">Enter Password:</string>
+    <string name="enter_username">Enter Username:</string>
+    <string name="case_sensitive_notice">Note: username and password are case-sensitive.</string>
+    <string name="admin_page">ADMIN PAGE</string>
+    <string name="user_page">USER PAGE</string>
+    <string name="update_your_username_and_or_password">Update your Username and/or Password</string>
+    <string name="user_page_toolbar">User Page</string>
+    <string name="username_user_page">Username</string>
+    <string name="view_reading_list">View Reading List</string>
+    <string name="view_books_read">View Books Read</string>
+    <string name="update_your_username_and_or_password_user_page">Update your Username and/or Password</string>
+    <string name="update_username">Update Username</string>
+    <string name="update_password">Update Password</string>
+    <string name="delete_a_book_from_lists">Delete a Book From Lists</string>
+    <string name="delete_book">Delete Book</string>
+    <string name="delete_all_books_nfrom_logs">Delete All Books \nFrom Logs</string>
+    <string name="delete_books">Delete Books</string>
+    <string name="delete_user_information_nand_logs">Delete User Information \nand Logs</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="change_username">Change Username</string>
+    <string name="change_password">Change Password</string>
+    <string name="delete_user_data">Delete User Data</string>
+    <string name="reset_database">Reset Database</string>
+    <string name="delete_user_and_all_associated_data">Delete user and all associated data</string>
     <string name="enter_book_title">Enter Book Title</string>
     <string name="add_book">Add Book</string>
     <string name="reading_list">Reading List</string>
@@ -15,5 +43,4 @@
     <string name="reading_list_username">Reading List \'username\'</string>
     <string name="books_read">Books Read</string>
     <string name="books_read_username">Books Read username</string>
-
 </resources>

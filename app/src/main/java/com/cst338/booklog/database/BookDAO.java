@@ -1,12 +1,12 @@
 package com.cst338.booklog.database;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
 
 import com.cst338.booklog.database.entities.Book;
 
@@ -23,21 +23,16 @@ public interface BookDAO {
     @Delete
     void delete(Book book);
 
+
     @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author by DESC")
     LiveData<List<Book>> getAllBooks();
 
-//    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre == :bookGenre")
-//    LiveData<List<Book>> getBooksByGenre(String bookGenre);
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre = :bookGenre")
+    LiveData<List<Book>> getBooksByGenre(String bookGenre);
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookTitle")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title = :bookTitle")
     LiveData<List<Book>> getBookByTitle(String bookTitle);
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookId ")
-    LiveData<List<Book>> getBookById(String bookId);
-
-//    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookAuthor")
-//    LiveData<List<Book>> getBooksByAuthor(String bookAuthor);
-//
-
-
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id = :bookId")
+    LiveData<Book> getBookById(int bookId);
 }

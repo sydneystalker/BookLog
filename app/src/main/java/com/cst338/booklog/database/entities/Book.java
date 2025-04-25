@@ -3,10 +3,7 @@ package com.cst338.booklog.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.cst338.booklog.database.BookLogDatabase;
-
 import java.util.Objects;
-
 @Entity(tableName = BookLogDatabase.BOOK_LOG_TABLE)
 public class Book {
     @PrimaryKey(autoGenerate = true)
@@ -32,7 +29,6 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id, title, author, genre);
     }
-
     public int getId() {
         return id;
     }
@@ -64,4 +60,5 @@ public class Book {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+
 }

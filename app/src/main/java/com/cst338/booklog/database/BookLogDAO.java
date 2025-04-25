@@ -20,4 +20,26 @@ public interface BookLogDAO {
 
     @Query("Select * from " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :loggedInUserId order by dateFinished DESC")
     LiveData<List<BookLog>> getRecordsetUserIdLiveData(int loggedInUserId);
+
+    @Query("DELETE FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id = :bookId")
+    void deleteBook(int bookId);
+
+    @Query("DELETE FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE bookId = :bookId")
+    void deleteBookLogsForBook(int bookId);
+
+    @Query("DELETE FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :userId")
+    void deleteAllLogsForUser(int userId);
+
+    @Query("DELETE FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id IN " +
+            "(SELECT bookId FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :userId)")
+    void deleteAllBooksForUser(int userId);
+
+    @Query("DELETE FROM " + BookLogDatabase.BOOK_LOG_TABLE)
+    void deleteAllBookLogs();
+
+    @Query("DELETE FROM " + BookLogDatabase.BOOK_TABLE)
+    void deleteAllBooks();
+
+    @Query("DELETE FROM " + BookLogDatabase.USER_TABLE + " WHERE isAdmin = 0")
+    void deleteAllNonAdminUsers();
 }

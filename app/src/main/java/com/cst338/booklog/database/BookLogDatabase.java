@@ -1,6 +1,3 @@
-/**
- * Author: Sydney Stalker
- */
 package com.cst338.booklog.database;
 
 import android.content.Context;
@@ -15,7 +12,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
-
 import com.cst338.booklog.database.entities.User;
 import com.cst338.booklog.database.typeConverters.LocalDateTypeConverters;
 
@@ -50,6 +46,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -63,6 +60,7 @@ public abstract class BookLogDatabase extends RoomDatabase {
                 dao.insert(admin);
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
+
             });
         }
     };
