@@ -18,15 +18,15 @@ public class BookViewModel extends AndroidViewModel {
 
     public BookViewModel(@NonNull Application application) {
         super(application);
-        repository = new BookRepository(application);
+        repository = BookRepository.getRepository(getApplication());
     }
 
     public LiveData<List<Book>> getAllBooks() {
         return repository.getAllBooks();
     }
 
-    public LiveData<List<Book>> getBooksByGenre(String genre) {
-        return repository.getBooksByGenre(genre);
-    }
+//    public LiveData<List<Book>> getBooksByGenre(String genre) {
+//        return repository.getBooksByGenre(genre);
+//    }
 }
 

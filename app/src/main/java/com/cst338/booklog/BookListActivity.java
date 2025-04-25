@@ -21,7 +21,7 @@ import java.util.List;
 
 
 public class BookListActivity extends AppCompatActivity {
-    private ActivityBookListBinding binding;
+    //private ActivityBookListBinding binding;
     private BookRepository bookRepo;
     private UserRepository userRepo;
     private BookAdapter adapter;
