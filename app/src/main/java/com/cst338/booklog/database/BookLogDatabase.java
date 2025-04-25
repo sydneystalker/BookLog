@@ -63,18 +63,11 @@ public abstract class BookLogDatabase extends RoomDatabase {
                 User testUser1 = new User("testuser1", "testuser1");
                 dao.insert(testUser1);
 
-                GenreDAO genreDao = INSTANCE.genreDAO();
-                genreDao.deleteAll();
-                genreDao.insert(new Genre("Fiction"));
-                genreDao.insert(new Genre("Non-Fiction"));
-                genreDao.insert(new Genre("Fantasy"));
-                genreDao.insert(new Genre("Romance"));
-                genreDao.insert(new Genre("Science Fiction"));
             });
         }
     };
 
-    public abstract GenreDAO genreDAO();
+    
     public abstract UserDAO userDAO();
     public abstract BookDAO bookDAO();
     public abstract BookLogDAO bookLogDAO();
