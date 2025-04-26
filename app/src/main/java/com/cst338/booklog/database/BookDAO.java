@@ -37,4 +37,10 @@ public interface BookDAO {
 
     @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id == :bookId")
     LiveData<Book> getBookById(int bookId);
+
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE)
+    List<Book> getAllBooksSimple();
+
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title = :title")
+    Book getBookByTitleSimple(String title);
 }
