@@ -17,6 +17,7 @@ import com.cst338.booklog.databinding.ActivityUserPageBinding;
 
 public class UserPageActivity extends AppCompatActivity {
     private static final String USER_PAGE_ACTIVITY_USER_ID = "com.cst338.booklog.USER_PAGE_ACTIVITY_USER_ID";
+    private boolean usernameCheckInProgress = false;
     private ActivityUserPageBinding binding;
     private UserRepository userRepository;
     private BookLogRepository bookLogRepository;
@@ -57,14 +58,20 @@ public class UserPageActivity extends AppCompatActivity {
     }
 
     private void updateUsername() {
+        if (usernameCheckInProgress) return;
+
         String newUsername = binding.usernameEditText.getText().toString().trim();
         if (newUsername.isEmpty()) {
             toastMaker("Username cannot be empty");
             return;
         }
 
-        //TODO: this
+        usernameCheckInProgress = true;
+
         userRepository.getUserByUserName(newUsername).observe(this, existingUser -> {
+            if (!usernameCheckInProgress) return;
+            usernameCheckInProgress = false;
+
             if (existingUser != null && existingUser.getId() != user.getId()) {
                 toastMaker("Username already taken");
             } else {
@@ -137,11 +144,13 @@ public class UserPageActivity extends AppCompatActivity {
     private void viewReadingList() {
         // Implement the view reading list functionality !!
         toastMaker("View Reading List clicked");
+        startActivity(AddBookActivity.addUnreadBookActivityIntentFactory(getApplicationContext(), loggedInUserId));
     }
 
     private void viewBooksRead() {
         // Implement the view books read functionality !!
         toastMaker("View Books Read clicked");
+        startActivity(AddBookActivity.addReadBookActivityIntentFactory(getApplicationContext(), loggedInUserId));
     }
 
     private void toastMaker(String message) {

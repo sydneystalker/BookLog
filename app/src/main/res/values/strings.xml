@@ -43,4 +43,10 @@
     <string name="reading_list_username">Reading List \'username\'</string>
     <string name="books_read">Books Read</string>
     <string name="books_read_username">Books Read username</string>
+    <string name="add_a_book">Add A Book</string>
+    <string name="add_to_list">Add to List</string>
+    <string name="enter_book_title_TV">Enter Book Title:</string>
+    <string name="enter_author">Enter Author:</string>
+    <string name="enter_title">Enter Title:</string>
+    <string name="enter_genre">Enter Genre:</string>
 </resources>

@@ -4,8 +4,6 @@ import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import com.cst338.booklog.database.entities.User;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -54,7 +52,7 @@ public class UserRepository {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e){
-            Log.i("BOOKLOG", "Problem when getting all GymLogs in the repository");
+            Log.i("BOOKLOG", "Problem when getting all BookLogs in the repository");
         }
         return null;
     }

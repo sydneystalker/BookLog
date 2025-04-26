@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface BookLogDAO {
     @Query("Select * from " + BookLogDatabase.BOOK_LOG_TABLE + " order by userId DESC")
     List<BookLog> getAllRecords();
 
-    @Query("Select * from " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :loggedInUserId order by dateFinished DESC")
+    @Query("Select * from " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :loggedInUserId")
     LiveData<List<BookLog>> getRecordsetUserIdLiveData(int loggedInUserId);
 
     @Query("DELETE FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id = :bookId")
@@ -43,9 +44,6 @@ public interface BookLogDAO {
     @Query("DELETE FROM " + BookLogDatabase.USER_TABLE + " WHERE isAdmin = 0")
     void deleteAllNonAdminUsers();
 
-
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE isFinished = true")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :userId & isFinished == true ")
     LiveData<List<BookLog>> getFinishedBooksByUser(int userId);
-
-
 }

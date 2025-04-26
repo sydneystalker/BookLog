@@ -43,4 +43,14 @@ public class BookRepository {
     public LiveData<List<Book>> getAllBooks() {
         return bookDAO.getAllBooks();
     }
+
+    public void insertBook(Book book) {
+        BookLogDatabase.databaseWriteExecutor.execute(()->{
+            bookDAO.insert(book);
+        });
+    }
+
+    public LiveData<Book> getBookByTitle(String title) {
+        return bookDAO.getBookByTitle(title);
+    }
 }

@@ -21,6 +21,7 @@ import java.util.List;
 
 
 public class BookListActivity extends AppCompatActivity {
+    private static final String BOOK_LIST_ACTIVITY_USER_ID = "com.cst338.booklog.BOOK_LIST_ACTIVITY_USER_ID";
     //private ActivityBookListBinding binding;
     private BookRepository bookRepo;
     private UserRepository userRepo;
@@ -31,70 +32,76 @@ public class BookListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityBookListBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        bookRepo = BookRepository.getRepository(getApplication());
-        userRepo = UserRepository.getRepository(getApplication());
-
-        username = getIntent().getStringExtra("USERNAME");
-
-        userRepo.getUserByUsername(username).observe(this, user -> {
-            if (user != null) {
-                userId = user.getId();
-                setupRecyclerView();
-                setupAddButton();
-            }
-        });
+//        binding = ActivityBookListBinding.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
+//
+//        bookRepo = BookRepository.getRepository(getApplication());
+//        userRepo = UserRepository.getRepository(getApplication());
+//
+//        username = getIntent().getStringExtra("USERNAME");
+//
+//        userRepo.getUserByUsername(username).observe(this, user -> {
+//            if (user != null) {
+//                userId = user.getId();
+//                setupRecyclerView();
+//                setupAddButton();
+//            }
+//        });
 
     }
 
-    private void setupRecyclerView() {
-        adapter = new BookAdapter(this::onMarkAsFinished);
-        binding.bookListRecycler.setAdapter(adapter);
-        binding.bookListRecycler.setLayoutManager(new LinearLayoutManager(this));
+//    private void setupRecyclerView() {
+//        adapter = new BookAdapter(this::onMarkAsFinished);
+//        binding.bookListRecycler.setAdapter(adapter);
+//        binding.bookListRecycler.setLayoutManager(new LinearLayoutManager(this));
+//
+//        bookRepo.getUnreadBooksByUser(userId).observe(this, new Observer<List<Book>>() {
+//            @Override
+//            public void onChanged(List<Book> books) {
+//                adapter.submitList(books);
+//            }
+//        });
+//    }
+//
+//    private void setupAddButton() {
+//        binding.addBookButton.setOnClickListener(v -> {
+//            String title = binding.bookTitleInput.getText().toString().trim();
+//            String author = binding.bookAuthorInput.getText().toString().trim();
+//            String genre = binding.bookGenreInput.getText().toString().trim();
+//
+//            if (!title.isEmpty() && !author.isEmpty() && !genre.isEmpty()) {
+//                Book newBook = new Book(0, title, author, genre);
+//                bookRepo.insertBook(newBook, insertedBookId -> {
+//                    BookLog bookLog = new BookLog(userId, insertedBookId, false, null);
+//                    bookRepo.insertBookLog(bookLog);
+//                });
+//
+//                binding.bookTitleInput.setText("");
+//                binding.bookAuthorInput.setText("");
+//                binding.bookGenreInput.setText("");
+//            }
+//        });
+//    }
+//
+//    private void onMarkAsFinished(Book book) {
+//        bookRepo.getBookLogByUserAndBook(userId, book.getBookId()).observe(this, bookLog -> {
+//            if (bookLog != null) {
+//                bookLog.setFinished(true);
+//                bookLog.setFinishDate(LocalDateTime.now());
+//                bookRepo.updateBookLog(bookLog);
+//            }
+//        });
+//    }
+//
+//    public static Intent intentFactory(Context context, String username) {
+//        Intent intent = new Intent(context, BookListActivity.class);
+//        intent.putExtra("USERNAME", username);
+//        return intent;
+//    }
 
-        bookRepo.getUnreadBooksByUser(userId).observe(this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-                adapter.submitList(books);
-            }
-        });
-    }
-
-    private void setupAddButton() {
-        binding.addBookButton.setOnClickListener(v -> {
-            String title = binding.bookTitleInput.getText().toString().trim();
-            String author = binding.bookAuthorInput.getText().toString().trim();
-            String genre = binding.bookGenreInput.getText().toString().trim();
-
-            if (!title.isEmpty() && !author.isEmpty() && !genre.isEmpty()) {
-                Book newBook = new Book(0, title, author, genre);
-                bookRepo.insertBook(newBook, insertedBookId -> {
-                    BookLog bookLog = new BookLog(userId, insertedBookId, false, null);
-                    bookRepo.insertBookLog(bookLog);
-                });
-
-                binding.bookTitleInput.setText("");
-                binding.bookAuthorInput.setText("");
-                binding.bookGenreInput.setText("");
-            }
-        });
-    }
-
-    private void onMarkAsFinished(Book book) {
-        bookRepo.getBookLogByUserAndBook(userId, book.getBookId()).observe(this, bookLog -> {
-            if (bookLog != null) {
-                bookLog.setFinished(true);
-                bookLog.setFinishDate(LocalDateTime.now());
-                bookRepo.updateBookLog(bookLog);
-            }
-        });
-    }
-
-    public static Intent intentFactory(Context context, String username) {
+    public static Intent intentFactory(Context context, int userId) {
         Intent intent = new Intent(context, BookListActivity.class);
-        intent.putExtra("USERNAME", username);
+        intent.putExtra(BOOK_LIST_ACTIVITY_USER_ID, userId);
         return intent;
     }
 }
