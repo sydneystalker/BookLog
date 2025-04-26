@@ -19,6 +19,9 @@ import com.cst338.booklog.database.entities.User;
 import com.cst338.booklog.databinding.ActivityAdminPageBinding;
 
 public class AdminPageActivity extends AppCompatActivity {
+
+    private boolean usernameCheckInProgress = false;
+
     private static final String ADMIN_PAGE_ACTIVITY_USER_ID = "com.cst338.booklog.ADMIN_PAGE_ACTIVITY_USER_ID";
     private static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.cst338.booklog.SAVED_INSTANCE_STATE_USERID_KEY";
     private ActivityAdminPageBinding binding;
@@ -54,13 +57,20 @@ public class AdminPageActivity extends AppCompatActivity {
     }
 
     private void changeUsername() {
+        if (usernameCheckInProgress) return;
+
         String newUsername = binding.usernameEditText.getText().toString().trim();
         if (newUsername.isEmpty()) {
             toastMaker("Username cannot be empty");
             return;
         }
 
+        usernameCheckInProgress = true;
+
         userRepository.getUserByUserName(newUsername).observe(this, existingUser -> {
+            if (!usernameCheckInProgress) return;
+            usernameCheckInProgress = false;
+
             if (existingUser != null && existingUser.getId() != user.getId()) {
                 toastMaker("Username already taken");
             } else {
