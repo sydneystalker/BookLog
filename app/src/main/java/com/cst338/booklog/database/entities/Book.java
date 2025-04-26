@@ -31,6 +31,7 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id, title, author, genre);
     }
+
     public int getId() {
         return id;
     }

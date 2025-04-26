@@ -29,14 +29,12 @@ public interface BookDAO {
     @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " ORDER by author DESC")
     LiveData<List<Book>> getAllBooks();
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre = :bookGenre")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE genre == :bookGenre")
     LiveData<List<Book>> getBooksByGenre(String bookGenre);
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title = :bookTitle")
-    LiveData<List<Book>> getBookByTitle(String bookTitle);
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE title == :bookTitle")
+    LiveData<Book> getBookByTitle(String bookTitle);
 
-    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id = :bookId")
+    @Query("SELECT * FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id == :bookId")
     LiveData<Book> getBookById(int bookId);
-
-
 }

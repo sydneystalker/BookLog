@@ -70,14 +70,14 @@ public class BookLogRepository {
     }
 
     public void insertBookLog(BookLog bookLog) {
-        databaseWriteExecutor.execute(() ->
+        BookLogDatabase.databaseWriteExecutor.execute(() ->
         {
             bookLogDAO.insert(bookLog);
         });
     }
 
     public void insertUser(User... user) {
-        databaseWriteExecutor.execute(() ->
+        BookLogDatabase.databaseWriteExecutor.execute(() ->
         {
             userDAO.insert(user);
         });
@@ -96,14 +96,14 @@ public class BookLogRepository {
     }
 
     public void deleteBookAndLogs(int bookId, int userId) {
-        databaseWriteExecutor.execute(() -> {
+        BookLogDatabase.databaseWriteExecutor.execute(() -> {
             bookLogDAO.deleteBookLogsForBook(bookId);
             bookLogDAO.deleteBook(bookId);
         });
     }
 
     public void deleteAllBooksAndLogsForUser(int userId) {
-        databaseWriteExecutor.execute(() -> {
+        BookLogDatabase.databaseWriteExecutor.execute(() -> {
             bookLogDAO.deleteAllLogsForUser(userId);
             bookLogDAO.deleteAllBooksForUser(userId);
         });
@@ -125,7 +125,7 @@ public class BookLogRepository {
         });
     }
 
-    public LiveData<Object> getFinishedBooksByUser(int userId) {
-
+    public LiveData<List<BookLog>> getFinishedBooksByUser(int userId) {
+        return bookLogDAO.getFinishedBooksByUser(userId);
     }
 }

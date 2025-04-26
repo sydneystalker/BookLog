@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverters.class)
-@Database(entities = {BookLog.class, User.class, Book.class}, version = 2, exportSchema = false)
+@Database(entities = {BookLog.class, User.class, Book.class}, version = 4, exportSchema = false)
 public abstract class BookLogDatabase extends RoomDatabase {
     public static final String USER_TABLE = "userTable";
     public static final String BOOK_TABLE = "bookTable";
@@ -64,13 +64,15 @@ public abstract class BookLogDatabase extends RoomDatabase {
                 bDao.deleteAllBooks();
                 Book book = new Book("testtitle1","testauthor1", "testgenre1");
                 bDao.insert(book);
+                Book book2 = new Book("testtitle2","testauthor2", "testgenre2");
+                bDao.insert(book2);
 
                 BookLogDAO lDao = INSTANCE.bookLogDAO();
-                BookLog bookLog = new BookLog(testUser1.getId(), book.getId(), true);
+                lDao.deleteAllBookLogs();
+                BookLog bookLog = new BookLog(1, 1, true);
                 lDao.insert(bookLog);
-
-                BookLog bookLog2 = new BookLog(12, 24, false);
-                lDao.insert(bookLog);
+                BookLog bookLog2 = new BookLog(1, 2, false);
+                lDao.insert(bookLog2);
 
             });
         }
