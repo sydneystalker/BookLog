@@ -3,21 +3,15 @@ package com.cst338.booklog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
-
 import com.cst338.booklog.database.BookLogRepository;
 import com.cst338.booklog.database.BookRepository;
 import com.cst338.booklog.database.UserRepository;
 import com.cst338.booklog.database.entities.Book;
 import com.cst338.booklog.database.entities.BookLog;
-import com.cst338.booklog.database.entities.User;
 import com.cst338.booklog.databinding.ActivityAddBookBinding;
 
 import java.util.List;
@@ -47,9 +41,62 @@ public class AddBookActivity extends AppCompatActivity {
 
         userId = getIntent().getIntExtra(ADD_BOOK_ACTIVITY_USER_ID, -1);
         isBookFinished = getIntent().getBooleanExtra(ADD_BOOK_ACTIVITY_IS_FINISHED, false);
-//        isBookFinished = true;
 
-        binding.addToListButton.setOnClickListener(v -> addBook());
+        binding.addBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addBook();
+            }
+        });
+
+        binding.addBookButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(book.getId() >= 0){
+                    binding.bookSubmitStatus.setText("Ready to add!");
+                    binding.bookSubmitStatus.setTextColor(getResources().getColor(R.color.green));
+                }else{
+                    binding.bookSubmitStatus.setText("Book is not ready for List");
+                    binding.bookSubmitStatus.setTextSize(30);
+                    binding.bookSubmitStatus.setTextColor(getResources().getColor(R.color.red));
+                }
+                return true;
+            }
+        });
+
+        binding.addToListButton.setOnClickListener(v -> addBookLog());
+    }
+
+    private void addBookLog() {
+        AtomicBoolean need = new AtomicBoolean(false);
+
+        LiveData<List<BookLog>> bookObserver = bookLogRepo.getAllLogsByUserIdLiveData(userId);
+        bookObserver.observe(this, bookLogs -> {
+            for(BookLog bLog: bookLogs){
+                if(bLog.getBookId() == book.getId()){
+                    if(!need.get()) {
+                        toastMaker("Book is already listed.");
+                        need.set(true);
+                        return;
+                    }
+                }
+            }
+
+            if(!need.get()){
+                if(isBookFinished){
+                    bookLog = new BookLog(userId, book.getId(),true);
+                    bookLogRepo.insertBookLog(bookLog);
+                    toastMaker("Congrats! The book was added to your 'Books Read' List");
+                    need.set(true);
+                }
+                else{
+                    bookLog = new BookLog(userId, book.getId(),false);
+                    bookLogRepo.insertBookLog(bookLog);
+                    toastMaker("Congrats! The book was added to your 'Reading' List");
+                    need.set(true);
+                }
+            }
+        });
     }
 
     public void addBook(){
@@ -57,66 +104,32 @@ public class AddBookActivity extends AppCompatActivity {
         String author = binding.enterBookAuthorET.getText().toString().trim();
         String genre = binding.enterBookGenreET.getText().toString().trim();
 
-        AtomicBoolean makeFinalToast = new AtomicBoolean(true);
-        AtomicBoolean makeNewBookLog = new AtomicBoolean(true);
-        AtomicBoolean addNewBook = new AtomicBoolean(false);
-
         if(title.isEmpty() || author.isEmpty() || genre.isEmpty()) {
             toastMaker("Error: All text fields must be completed");
             return;
         }
 
+        AtomicBoolean need = new AtomicBoolean(false);
+
         LiveData<Book> bookObserver = bookRepo.getBookByTitle(title);
         bookObserver.observe(this, book -> {
-            if(book == null) {
+            this.book = book;
+            if(book == null){
                 this.book = new Book(title, author, genre);
-                addNewBook.set(true);
+                bookRepo.insertBook(this.book);
+                need.set(true);
             }
             else{
-                if(book.getAuthor().equalsIgnoreCase(author))
+                if(author.equalsIgnoreCase(book.getAuthor()))
                 {
-                    toastMaker("Book exists within database.");
-                    this.book = book;
+                    if(!need.get()) {
+                        toastMaker("Book is already in the database");
+                    }
                 }
                 else{
                     this.book = new Book(title, author, genre);
-                    addNewBook.set(true);
-                }
-            }
-        });
-
-        LiveData<List<BookLog>> bookLogObserver = bookLogRepo.getAllLogsByUserIdLiveData(userId);
-        bookLogObserver.observe(this, bookLogs -> {
-            for(BookLog bookLog : bookLogs){
-                if(bookLog.getBookId() == book.getId()){
-                    makeNewBookLog.set(false);
-                }
-            }
-
-            if(makeNewBookLog.get()){
-                if(addNewBook.get()){
-                    bookRepo.insertBook(book);
-                }
-
-                if(isBookFinished){
-                    this.bookLog = new BookLog(userId, book.getId(), true);
-                    makeFinalToast.set(false);
-                   // bookLogRepo.insertBookLog(bookLog);
-                    toastMaker("Congrats! The book was added to your Finished Books.");
-                    startActivity(UserPageActivity.userPageActivityIntentFactory(getApplication(),userId));
-//                    startActivity(BooksReadActivity.intentFactory(getApplication(), userId));
-                }
-                else{
-                    this.bookLog = new BookLog(userId, book.getId(), false);
-                    makeFinalToast.set(false);
-                   // bookLogRepo.insertBookLog(bookLog);
-                    toastMaker("Congrats! The book was added to your Reading List.");
-                    startActivity(UserPageActivity.userPageActivityIntentFactory(getApplication(),userId));
-//                    startActivity(BookListActivity.intentFactory(getApplication(), userId));
-                }
-            }else{
-                if(makeFinalToast.get()){
-                    toastMaker("Book is already logged.");
+                    bookRepo.insertBook(this.book);
+                    need.set(true);
                 }
             }
         });

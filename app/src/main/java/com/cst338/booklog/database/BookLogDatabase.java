@@ -69,9 +69,9 @@ public abstract class BookLogDatabase extends RoomDatabase {
 
                 BookLogDAO lDao = INSTANCE.bookLogDAO();
                 lDao.deleteAllBookLogs();
-                BookLog bookLog = new BookLog(1, 1, true);
+                BookLog bookLog = new BookLog(2, 1, true);
                 lDao.insert(bookLog);
-                BookLog bookLog2 = new BookLog(1, 2, false);
+                BookLog bookLog2 = new BookLog(2, 2, false);
                 lDao.insert(bookLog2);
 
             });
