@@ -12,7 +12,7 @@
         android:id="@+id/pageHeaderTV"
         android:layout_width="360dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:text="@string/add_a_book"
         android:textSize="44sp"
@@ -40,8 +40,8 @@
         android:id="@+id/enterBookTitleET"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginBottom="176dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="200dp"
         android:textSize="20sp"
         android:autofillHints=""
         android:gravity="center"
@@ -71,7 +71,7 @@
         android:id="@+id/enterBookAuthorET"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="10dp"
         android:autofillHints=""
         android:textSize="20sp"
@@ -101,7 +101,7 @@
         android:id="@+id/enterBookGenreET"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginStart="160dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
         tools:textAlignment="center"
@@ -114,6 +114,31 @@
         app:layout_constraintTop_toBottomOf="@+id/enterBookAuthorET" />
 
     <Button
+        android:id="@+id/addBookButton"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/submit_book"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterBookGenreET" />
+
+    <TextView
+        android:id="@+id/bookSubmitStatus"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:text=""
+        android:textSize="30sp"
+        tools:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addBookButton"/>
+
+    <Button
         android:id="@+id/addToListButton"
         android:layout_width="300dp"
         android:layout_height="80dp"
@@ -123,6 +148,6 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterBookGenreET" />
+        app:layout_constraintTop_toBottomOf="@+id/bookSubmitStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
