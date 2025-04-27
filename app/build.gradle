@@ -29,6 +29,11 @@ android {
     buildFeatures{
         viewBinding true
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -37,7 +42,10 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.ext.junit
     testImplementation libs.junit
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.13")
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 

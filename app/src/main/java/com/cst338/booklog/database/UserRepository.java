@@ -76,4 +76,10 @@ public class UserRepository {
             userDAO.update(user);
         });
     }
+
+    public void deleteUser(User user) {
+        BookLogDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.delete(user);
+        });
+    }
 }
