@@ -32,7 +32,8 @@ public interface BookLogDAO {
     void deleteAllLogsForUser(int userId);
 
     @Query("DELETE FROM " + BookLogDatabase.BOOK_TABLE + " WHERE id IN " +
-            "(SELECT bookId FROM " + BookLogDatabase.BOOK_LOG_TABLE + " WHERE userId = :userId)")
+            "(SELECT bookId FROM " + BookLogDatabase.BOOK_LOG_TABLE +
+            " WHERE userId = :userId)")
     void deleteAllBooksForUser(int userId);
 
     @Query("DELETE FROM " + BookLogDatabase.BOOK_LOG_TABLE)
